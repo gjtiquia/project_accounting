@@ -1,4 +1,3 @@
-
 HI GJ 
 
 4. Accounting system (Shumin)
@@ -20,3 +19,5 @@ how about we make a two dimension array?
 Acc_system[num of row][num of col]
 num of row= number of user
 num of col= number of entity
+
+Hi GJ
