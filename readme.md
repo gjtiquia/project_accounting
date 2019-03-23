@@ -13,3 +13,10 @@ provide statistical report of users’ financial state (e.g. monthly income and 
 food expenses, etc.); and 6) the accounting system allows budget setting. When expenses reach the
 budget, there should be an alert from the system. Add a function you think is useful to the system but
 not previously mentioned.
+
+
+
+how about we make a two dimension array?
+Acc_system[num of row][num of col]
+num of row= number of user
+num of col= number of entity
