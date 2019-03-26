@@ -4,6 +4,7 @@ An accounting system will be designed as a digital tool to manage wealth and fin
 
 Problem Setting:
 More than one user can use the system.
+The threshold of expenses is a fixed constant in a period of time
 
 Program Functions (1-6 are basic function requirements, 7-8 are other useful functions):
 1) Add records of income and expenses; 
@@ -13,5 +14,5 @@ Program Functions (1-6 are basic function requirements, 7-8 are other useful fun
 5) The system should provide statistical report of users’ financial state (e.g. monthly income and expenses, percentage of food expenses, etc.);
 6) The accounting system allows budget setting. When expenses reach the budget, there should be an alert from the system;
 7) Create a function to see the trend of the expense, warn before reaching exceed a certain threshold;
-8) A login name and password will be required at the beginning to access different users;
+8) A login ID and password will be required at the beginning for the users to login to their account;
 9) A sign up function can be used for new users;
