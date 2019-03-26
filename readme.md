@@ -1,42 +1,17 @@
-Problem statement:
+Problem Statement:
 
-Accounting system (Shumin)
-background information:
-Learn how to manage our financial status is an important lesson for all of us. More and more people
-choose to use digital tools to manage their wealth efficiently.
+An accounting system will be designed as a digital tool to manage wealth and financial status efficiently. The system will help by keeping track of the user's income and expense, and appropriately present the data to the user.
 
-Aim:
-In this idea, we target to build an accounting system to help people keep track of their income and expense. Minimally, the system
-shall include basic functions including
+Problem Setting:
+More than one user can use the system.
 
-1) add records of income and expenses; 
-
-2) the records should contain some basic information, like amount, date, types of income or expense (e.g. food, game,
-salary, etc.), account (e.g cash, bank card, credit card, etc.);(4 col)
-
-3) the records could be deleted and edited
-at any time; 
-
-4) users could view their records by date, type, and account;
-
-5) the system should
-provide statistical report of users’ financial state (e.g. monthly income and expenses, percentage of
-food expenses, etc.); and 
-
-6) the accounting system allows budget setting. When expenses reach the
-budget, there should be an alert from the system.
-
-7) create a funtion to see the trend of the expense, warn if it exceed a certain threshold.
-
-problem setting:
-Assume that the goal is a constant
-
-
-how about we make a two dimension array?
-Acc_system[num of row][num of col]
-num of row= number of user
-num of col= number of entity
-
-the datum are saved in a text file such as (seperated by " "):
-1000 20190326 1337 food cash 
-
+Program Functions (1-6 are basic function requirements, 7-8 are other useful functions):
+1) Add records of income and expenses; 
+2) Records contain amount, date, types of income or expense (e.g. food, game, salary, etc.), account (e.g cash, bank card, credit card, etc.);
+3) The records can be deleted or edited at any time; 
+4) The user could view their records by date, type, and account;
+5) The system should provide statistical report of users’ financial state (e.g. monthly income and expenses, percentage of food expenses, etc.);
+6) The accounting system allows budget setting. When expenses reach the budget, there should be an alert from the system;
+7) Create a function to see the trend of the expense, warn before reaching exceed a certain threshold;
+8) A login name and password will be required at the beginning to access different users;
+9) A sign up function can be used for new users;
