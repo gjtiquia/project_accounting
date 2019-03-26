@@ -1,9 +1,10 @@
 how about we make a two dimension array?
 Acc_system[num of row][num of col]
-num of row= number of user
-num of col= number of entity
+num of row = number of user
+num of col = number of entity
 
 the datum are saved in a text file such as (seperated by " "):
+(amount date time type account)
 1000 20190326 1337 food cash 
 
 // C++ code for the implementation 
