@@ -16,3 +16,4 @@ Program Functions (1-6 are basic function requirements, 7-8 are other useful fun
 7) Create a function to see the trend of the expense, warn before reaching exceed a certain threshold;
 8) A login ID and password will be required at the beginning for the users to login to their account;
 9) A sign up function can be used for new users;
+10) Export a financial report
