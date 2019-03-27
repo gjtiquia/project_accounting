@@ -6,7 +6,7 @@ Problem Setting:
 Assume only one user, attempt to enable more than one user to use the system.
 The threshold of expenses is a fixed constant in a period of time. (ie. a week, a month)
 
-Program Functions (1-6 are basic function requirements, 7-8 are other useful functions):
+Program Functions (1-6 are basic function requirements, 7-10 are other useful functions):
 1) Add records of income and expenses; 
 2) Records contain amount, date, types of income or expense (e.g. food, game, salary, etc.), account (e.g cash, bank card, credit card, etc.);
 3) The records can be deleted or edited at any time; 
