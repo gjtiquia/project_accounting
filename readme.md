@@ -3,8 +3,8 @@ Problem Statement:
 An accounting system will be designed as a digital tool to manage wealth and financial status efficiently. The system will help by keeping track of the user's income and expense, and appropriately present the data to the user.
 
 Problem Setting:
-More than one user can use the system.
-The threshold of expenses is a fixed constant in a period of time
+Assume only one user, attempt to enable more than one user to use the system.
+The threshold of expenses is a fixed constant in a period of time. (ie. a week, a month)
 
 Program Functions (1-6 are basic function requirements, 7-8 are other useful functions):
 1) Add records of income and expenses; 
@@ -14,6 +14,6 @@ Program Functions (1-6 are basic function requirements, 7-8 are other useful fun
 5) The system should provide statistical report of users’ financial state (e.g. monthly income and expenses, percentage of food expenses, etc.);
 6) The accounting system allows budget setting. When expenses reach the budget, there should be an alert from the system;
 7) Create a function to see the trend of the expense, warn before reaching exceed a certain threshold;
-8) A login ID and password will be required at the beginning for the users to login to their account;
-9) A sign up function can be used for new users;
+8) (Attempt) A login ID and password will be required at the beginning for the users to login to their account;
+9) (Attempt) A sign up function can be used for new users;
 10) Export a financial report
