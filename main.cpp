@@ -66,6 +66,47 @@ void enterMode(string &mode) {
 
 // ================================
 
+// Function: (1)
+// Input: string username: user's username
+void mode_add(string username) {
+  
+}
+
+// ================================
+
+// Function: (2)
+// Input: string username: user's username
+void mode_delete(string username) {
+  
+}
+
+// ================================
+
+// Function: (3)
+// Input: string username: user's username
+void mode_edit(string username) {
+  
+}
+
+// ================================
+
+// Function: (4)
+// Input: string username: user's username
+void mode_view(string username) {
+  
+}
+
+// ================================
+
+// Function: (5)
+// Input: string username: user's username
+void mode_budget_setting(string username) {
+  
+}
+
+// ================================
+
+
 /////////////////////////////////
 
 
@@ -88,6 +129,11 @@ int main() {
     enterUsername(username);
   }
 
+  // Check if database exists, if not then create empty database
+  // username_passwords.txt should contain all usernames and passwords
+  // each username should have a .txt file containing their records. 
+  // eg chris_wong have chris_wong.txt
+  
 
   // Check if username in database
 
@@ -114,7 +160,7 @@ int main() {
     "3", "Edit", 
     "4", "View",
     "5", "Budget Setting",
-    "6", "Exit"
+    "6", "Exit" // This should always be last
   }
 
   cout << "Select a Mode" << endl;
@@ -124,8 +170,15 @@ int main() {
     cout << "Invalid Mode. Please enter again." << endl;
     enterMode(mode);
   }
-
-
+  
+  if (mode == "1" || mode == "Add") {
+    mode_add(username);
+  }
+  else if (mode == "2" || mode == "Delete") {
+    mode_delete(username); 
+  }
+  // not finished
+      
   // ^---------------------^
 
 
