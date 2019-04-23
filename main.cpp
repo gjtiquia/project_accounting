@@ -226,7 +226,7 @@ int main() {
     
       if (attempts == 0) {
         cout << "Exiting program..." << endl;
-        exit(EXIT_SUCCESS);
+        exit(EXIT_SUCCESS);  // reference: http://www.cplusplus.com/reference/cstdlib/exit/
       }
 
       cout << "(Attempts left: " << attempts << ")" << endl;
@@ -235,20 +235,28 @@ int main() {
     }
 
     // If in database, enter password
-    cout << "Password: " << endl;
+    cout << "Password: ";
     enterData(password);
     
     // Check the password, MAX 3 ATTEMPTS
+    attempts = 3;
     while (not stringInArray(password, validpassword, numberofdata)) {
+      attempts--;
       cout << "Invalid password, please enter again." << endl;
-      cout << "Password: " << endl;
+      
+      if (attempts == 0) {
+        cout << "Exiting program..." << endl;
+        exit(EXIT_SUCCESS);  // reference: http://www.cplusplus.com/reference/cstdlib/exit/
+      }
+
+      cout << "(Attempts left: " << attempts << ")" << endl;
+      cout << "Password: ";
       enterData(password);
     }
 
-    cout << "Valid password" << endl;
-    
     // Open user's txt file
     ofstream fout(username + ".txt");
+    fout.close();
   }
 
   // ^------------------------^
