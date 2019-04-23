@@ -56,7 +56,8 @@ bool stringInArray(string line, string array[], int array_size) {
 // Function: Prompts user to enter data with space
 // Input: string username: variable to store username
 void enterUsername(string &username) {
-  getline(cin, username); // use getline() in case user types in space " "
+  cout << "test";
+  getline(cin, username, '\n'); // use getline() in case user types in space " "
 }
 
 // ================================
@@ -136,23 +137,24 @@ void mode_budget_setting(string username) {
 // Main Function
 int main() {
   string username, password;
-  int command; // store 1 or 2; 
+  string command; // store 1 or 2; 
   cout << "Welcome to the Accounting System" << endl;
 
   // Log In or Sign Up
   cout << "1) Log In" << endl << "2) Sign Up" << endl;
   cout << "(Enter '1' or '2')" << endl;
   cout << "Command: ";
-  cin >> command;
+  getline(cin, command);
 
   // Restricts Command to 1 or 2
-  while(command>2 or command<1){ //check the command
-    cout << "Invalid command, please enter it again" <<endl;
-    cin >> command;
+  while (command != "2" && command != "1") {
+    cout << "Invalid command, please enter it again." << endl;
+    cout << "Command: ";
+    getline(cin, command);
   }
 
   // v---- Log In ----v
-  if (command == 1) { 
+  if (command == "1") { 
 
     // Creates two dynamic array to save valid usernames and passwords
     ifstream fin("username_passwords.txt");
@@ -169,7 +171,7 @@ int main() {
     
     // Enters Username (CANNOT contain space)
     cout << "Please enter your account username and password." << endl;
-    cout << "Username: " <<endl;
+    cout << "Username: ";
     enterUsername(username);
     
     // Restricts space in username
@@ -186,8 +188,8 @@ int main() {
 
 
     // Check if username in dynamic array
-    for (int i=0;i<numberofdata; i++){
-      if(username==validusername[i]){
+    for (int i=0; i < numberofdata; i++){
+      if (username == validusername[i]) {
         cout << "Valid Username." << endl;
         break;
       }    
@@ -195,14 +197,15 @@ int main() {
 
     // If in database, enter password
     cout << "Password: " <<endl;
-    enterUsername(password);
+    enterPassword(password);
     
     // Check the password
-    while (password != validpassword[i]) {
-      cout << "Invalid password, please enter it again" <<endl;
-      cout << "Password: " <<endl;
-      enterUsername(password);
-    }
+    
+    //while (password != validpassword[i]) {
+    //  cout << "Invalid password, please enter it again" <<endl;
+    //  cout << "Password: " <<endl;
+    //  enterUsername(password);
+    //}
 
     cout << "Valid password" << endl;
     
@@ -215,7 +218,7 @@ int main() {
   
   // v---- Sign Up ----v
 
-  if (command==2) {
+  if (command == "2") {
     string newusername, newpassword, passwordcheck;
     cout << "Please enter your new username and password." <<endl;
     
