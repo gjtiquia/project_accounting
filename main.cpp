@@ -257,6 +257,10 @@ int main() {
     // Open user's txt file
     ofstream fout(username + ".txt");
     fout.close();
+
+    // Free memory from dynamic array
+    delete [] validusername;
+    delete [] validpassword;
   }
 
   // ^------------------------^
