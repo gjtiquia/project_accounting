@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -81,7 +82,7 @@ void enterMode(string &mode, string valid_modes[], int mode_size) {
 
 // ================================
 
-// Function: (1)
+// Function: (1) ADD
 // Input: string username: user's username
 void mode_add(string username) {
   cout << "ADD mode selected" << endl;
@@ -109,7 +110,7 @@ void mode_add(string username) {
   cout << "Please enter time (eg. please enter 1612 if the time is 4:12pm and 0230 if the time is 2:30am): ";
   cin >> time;
   //time must be 4 digits, can add some more condition later such as hr<24 and mins<60...
-  while (time.length() != 4 or time.substr(0,2) >= 24 or time.substr(2,2)>=60){
+  while (time.length() != 4 or stoi(time.substr(0,2)) >= 24 or stoi(time.substr(2,2)) >= 60){
     cout << endl;
     cout << "Time must be in 4 digit and , please enter it again: ";
     cin >> date;
@@ -193,7 +194,7 @@ int main() {
     fin >> numberofdata;
     string * validusername = new string [numberofdata];
     string * validpassword = new string [numberofdata];
-    for (int i=0; i<numberofdata; i++){
+    for (int i=0; i<numberofdata; i++) {
       fin >> validusername[i];
       fin >> validpassword[i];
     }
@@ -218,25 +219,32 @@ int main() {
     // eg chris_wong have chris_wong.txt
 
 
-    // Check if username in dynamic array
-    for (int i=0; i < numberofdata; i++){
-      if (username == validusername[i]) {
-        cout << "Valid Username." << endl;
-        break;
-      }    
+    // Check if username in dynamic array, MAX 3 ATTEMPTS
+    int attempts = 3;
+    while (not stringInArray(username, validusername, numberofdata)) {
+      attempts--;
+      cout << "Username not in database" << endl;
+    
+      if (attempts == 0) {
+        cout << "Exiting program..." << endl;
+        exit(EXIT_SUCCESS);
+      }
+
+      cout << "(Attempts left: " << attempts << ")" << endl;
+      cout << "Username: ";
+      enterData(username);
     }
 
     // If in database, enter password
     cout << "Password: " << endl;
     enterData(password);
     
-    // Check the password
-    
-    //while (password != validpassword[i]) {
-    //  cout << "Invalid password, please enter it again" <<endl;
-    //  cout << "Password: " <<endl;
-    //  enterData(password);
-    //}
+    // Check the password, MAX 3 ATTEMPTS
+    while (not stringInArray(password, validpassword, numberofdata)) {
+      cout << "Invalid password, please enter again." << endl;
+      cout << "Password: " << endl;
+      enterData(password);
+    }
 
     cout << "Valid password" << endl;
     
