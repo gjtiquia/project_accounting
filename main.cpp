@@ -31,12 +31,24 @@ bool containsString(string line, string part) {
 
 // ================================
 
-// Function: Check if string is in array
+// Function: Check if array contains string, NOT CASE SENSITIVE
 // Input: string line: string to check
 //        string array[]: array to check in
+//        int array_size: number of elements in array
 // Output: 1 if in, 0 if not
-bool stringInArray(string line, string array[]) {
+bool stringInArray(string line, string array[], int array_size) {
+  int out = 0;
 
+  // !!! need to make sure non-case sensitive
+
+  for (int i = 0; i < array_size; i++) {
+    if (line == array[i]) {
+      out = 1;
+      break;
+    }
+  }
+
+  return out;
 }
 
 // ================================
@@ -60,8 +72,20 @@ void enterPassword(string &password) {
 
 // Function: prompts user to enter mode
 // Input: string mode: variable to store mode
-void enterMode(string &mode) {
+//        string valid_modes[]: available modes to choose
+//        int mode_size: number of modes * 2
+void enterMode(string &mode, string valid_modes[], int mode_size) {
+  for (int i = 0; i < mode_size; i++) {
+    if (i % 2 == 0) {
+      cout << valid_modes[i] << ") ";
+    }
+    else {
+      cout << valid_modes[i] << endl;
+    }
+  }
 
+  cout << "Mode: ";
+  getline(cin, mode); // use getline() in case user types in space " "
 }
 
 // ================================
@@ -69,7 +93,7 @@ void enterMode(string &mode) {
 // Function: (1)
 // Input: string username: user's username
 void mode_add(string username) {
-  
+  cout << "ADD mode selected" << endl;
 }
 
 // ================================
@@ -77,7 +101,7 @@ void mode_add(string username) {
 // Function: (2)
 // Input: string username: user's username
 void mode_delete(string username) {
-  
+  cout << "DELETE mode selected" << endl;
 }
 
 // ================================
@@ -154,6 +178,7 @@ int main() {
   // Can re-input if wrong
 
   string mode;
+  int mode_size = 12;
   string valid_modes[] = {
     "1", "Add", 
     "2", "Delete", 
@@ -161,14 +186,14 @@ int main() {
     "4", "View",
     "5", "Budget Setting",
     "6", "Exit" // This should always be last
-  }
+  };
 
   cout << "Select a Mode" << endl;
-  enterMode(mode);
+  enterMode(mode, valid_modes, mode_size);
 
-  while (not stringInArray(mode, valid_modes[])) {
+  while (not stringInArray(mode, valid_modes, mode_size)) {
     cout << "Invalid Mode. Please enter again." << endl;
-    enterMode(mode);
+    enterMode(mode, valid_modes, mode_size);
   }
   
   if (mode == "1" || mode == "Add") {
