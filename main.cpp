@@ -196,15 +196,30 @@ int main() {
     enterMode(mode, valid_modes, mode_size);
   }
   
-  if (mode == valid_modes[0] || mode == valid_modes[1]) {
-    mode_add(username);
+  while (not (mode == valid_modes[10]) && not (mode == valid_modes[11]) ) {
+
+    if (mode == valid_modes[0] || mode == valid_modes[1]) {
+      mode_add(username);
+    }
+    else if (mode == valid_modes[2] || mode == valid_modes[3]) {
+      mode_delete(username);
+    }
+    else if (mode == valid_modes[4] || mode == valid_modes[5]) {
+      mode_edit(username);
+    }
+    else if (mode == valid_modes[6] || mode == valid_modes[7]) {
+      mode_view(username);
+    }
+    else if (mode == valid_modes[8] || mode == valid_modes[9]) {
+      mode_budget_setting(username);
+    }
+
+    // Re-enter mode
+    cout << "Select a Mode" << endl;
+    enterMode(mode, valid_modes, mode_size);
   }
-  else if (mode == valid_modes[2] || mode == valid_modes[3]) {
-    mode_delete(username);
-  }
-  else if (mode == valid_modes[4] || mode == valid_modes[5]) {
-    mode_edit(username);
-  }
+
+  cout << "Exiting..." << endl;
       
   // ^---------------------^
 
