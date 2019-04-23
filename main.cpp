@@ -127,7 +127,7 @@ void mode_add(string username) {
   cout << "Please enter account in one word (eg. cash, octopus, credit_card...): ";
   cin >> account;
   
-  ofstream fout(username + ".txt");
+  ofstream fout(username + ".txt", ios::app); // REMEMBER TO ADD ios::app for APPEND, OR ELSE WILL OVERWRITE
   fout << amount << ' ' << date << ' ' << time << ' ' << type << ' ' << account << endl;
   fout.close();
   
@@ -255,7 +255,7 @@ int main() {
     }
 
     // Open user's txt file
-    ofstream fout(username + ".txt");
+    ofstream fout(username + ".txt", ios::app); // REMEMBER TO ADD ios::app for APPEND, OR ELSE WILL OVERWRITE
     fout.close();
 
     // Free memory from dynamic array
@@ -271,49 +271,58 @@ int main() {
   if (command == "2") {
     string newusername, newpassword, passwordcheck;
     cout << "Please enter your new username and password." <<endl;
-    
+
+    // Username, CANNOT CONTAIN SPACE    
     cout << "Username: ";
     enterData(newusername);
-    cout << "Password: ";
-    enterData(newpassword);
-    cout << "Please enter your password again: ";
-    enterData(passwordcheck);
-    
+
     while (containsString(newusername, " ")) {
       cout << "Username cannot contain space, please enter again." << endl;
-      cout << "Username: " <<endl;
+      cout << "Username: ";
       enterData(newusername);
     }
 
-    cout << "Valid username" << endl;
+    // Password, CANNOT CONTAIN SPACE
+    cout << "Password: ";
+    enterData(newpassword);
+
     while (containsString(newpassword, " ")) {
-      cout << "Password cannot contain space, please enter it twice again." << endl;
-      cout << "Password: " << endl;
+      cout << "Password cannot contain space, please enter it again." << endl;
+      cout << "Password: ";
       enterData(newpassword);
-      cout << "Please enter it again: " <<endl;
-      enterData(passwordcheck);
     }
+
+    cout << "Confirm Password (enter again): ";
+    enterData(passwordcheck);
 
     while (newpassword != passwordcheck) {
       cout << "Two password entered are not the same, please enter it twice again." << endl;
-      cout << "Password: " <<endl;
+      cout << "Password: ";
       enterData(newpassword);
-      cout << "Please enter it again: " <<endl;
+
+      while (containsString(newpassword, " ")) {
+        cout << "Password cannot contain space, please enter it again." << endl;
+        cout << "Password: ";
+        enterData(newpassword);
+      }
+
+      cout << "Confirm Password (enter again): ";
       enterData(passwordcheck);
     }
-    cout << "Valid Password" << endl;
     
-    //add new username and password into username_passwords.txt
+    // Add new username and password into username_passwords.txt
     ofstream fout;
-    fout.open("username_passwords.txt");
+    fout.open("username_passwords.txt", ios::app); // REMEMBER TO ADD ios:app for APPEND, OR ELSE WILL OVERWRITE
     fout << newusername << ' ' << newpassword << endl;
     fout.close();
     
     
-    //create account (new txt file)
+    // Create account (new txt file)
     ofstream createtxt;
     createtxt.open(newusername + ".txt");
-    username=newusername;
+    username = newusername;
+
+    cout << "Account Successfully Created" << endl;
   }
   
   // ^------------------------^
