@@ -109,7 +109,7 @@ void mode_delete(string username) {
 // Function: (3)
 // Input: string username: user's username
 void mode_edit(string username) {
-  
+  cout << "EDIT mode selected" << endl;  
 }
 
 // ================================
@@ -117,7 +117,7 @@ void mode_edit(string username) {
 // Function: (4)
 // Input: string username: user's username
 void mode_view(string username) {
-  
+  cout << "VIEW mode selected" << endl;
 }
 
 // ================================
@@ -125,7 +125,7 @@ void mode_view(string username) {
 // Function: (5)
 // Input: string username: user's username
 void mode_budget_setting(string username) {
-  
+  cout << "BUDGET SETTING mode selected" << endl;
 }
 
 // ================================
@@ -189,20 +189,22 @@ int main() {
   };
 
   cout << "Select a Mode" << endl;
-  enterMode(mode, valid_modes, mode_size);
+  enterMode(mode, valid_modes, mode_size); // changes string mode "abc" to "Abc". ie UPPER + (n-1)*LOWER
 
   while (not stringInArray(mode, valid_modes, mode_size)) {
     cout << "Invalid Mode. Please enter again." << endl;
     enterMode(mode, valid_modes, mode_size);
   }
   
-  if (mode == "1" || mode == "Add") {
+  if (mode == valid_modes[0] || mode == valid_modes[1]) {
     mode_add(username);
   }
-  else if (mode == "2" || mode == "Delete") {
-    mode_delete(username); 
+  else if (mode == valid_modes[2] || mode == valid_modes[3]) {
+    mode_delete(username);
   }
-  // not finished
+  else if (mode == valid_modes[4] || mode == valid_modes[5]) {
+    mode_edit(username);
+  }
       
   // ^---------------------^
 
