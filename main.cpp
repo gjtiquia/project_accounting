@@ -55,8 +55,8 @@ bool stringInArray(string line, string array[], int array_size) {
 
 // Function: Prompts user to enter data with space
 // Input: string username: variable to store username
-void enterUsername(string & data) {
-  getline(cin, data); // use getline() in case user types in space " "
+void enterUsername(string &username) {
+  getline(cin, username); // use getline() in case user types in space " "
 }
 
 // ================================
@@ -64,7 +64,7 @@ void enterUsername(string & data) {
 // Function: Prompts user to enter password
 // Input: string password: variable to store password
 void enterPassword(string &password) {
-
+  getline(cin, password); // use getline() in case user types in space " "
 }
 
 // ================================
@@ -136,18 +136,25 @@ void mode_budget_setting(string username) {
 // Main Function
 int main() {
   string username, password;
-  int command; //store 1 or 2; 
+  int command; // store 1 or 2; 
   cout << "Welcome to the Accounting System" << endl;
-  cout << "Please enter \"1\" for login or \"2\" for create new account" << endl;
+
+  // Log In or Sign Up
+  cout << "1) Log In" << endl << "2) Sign Up" << endl;
+  cout << "(Enter '1' or '2')" << endl;
+  cout << "Command: ";
   cin >> command;
+
+  // Restricts Command to 1 or 2
   while(command>2 or command<1){ //check the command
-    cout<<"Invalid command, please enter it again"<<endl;
+    cout << "Invalid command, please enter it again" <<endl;
     cin >> command;
   }
-  if (command==1){ //login
-    // v---- Log In/Sign Up ----v
 
-    //create two dynamic array to save valid username and password
+  // v---- Log In ----v
+  if (command == 1) { 
+
+    // Creates two dynamic array to save valid usernames and passwords
     ifstream fin("username_passwords.txt");
     int numberofdata;
     fin >> numberofdata;
@@ -181,34 +188,42 @@ int main() {
     // Check if username in dynamic array
     for (int i=0;i<numberofdata; i++){
       if(username==validusername[i]){
-        cout << "Valid Username"<<endl;
+        cout << "Valid Username." << endl;
         break;
       }    
     }
+
     // If in database, enter password
     cout << "Password: " <<endl;
     enterUsername(password);
     
-    //check the password
-    while (password!=validpassword[i]){
+    // Check the password
+    while (password != validpassword[i]) {
       cout << "Invalid password, please enter it again" <<endl;
       cout << "Password: " <<endl;
       enterUsername(password);
     }
-    cout<<"Valid password"<<endl;
+
+    cout << "Valid password" << endl;
     
-    //open user's txt file
-    ofstream fout(username+".txt");
+    // Open user's txt file
+    ofstream fout(username + ".txt");
   }
-  if (command==2){ //create new account
+
+  // ^------------------------^
+
+  
+  // v---- Sign Up ----v
+
+  if (command==2) {
     string newusername, newpassword, passwordcheck;
-    cout << "Please enter your User name once and password twice" <<endl;
+    cout << "Please enter your new username and password." <<endl;
     
-    cout << "Username: " <<endl;
+    cout << "Username: ";
     enterUsername(newusername);
-    cout << "Password: " <<endl;
+    cout << "Password: ";
     enterUsername(newpassword);
-    cout << "Please enter it again: " <<endl;
+    cout << "Please enter your password again: ";
     enterUsername(passwordcheck);
     
     while (containsString(newusername, " ")) {
@@ -216,14 +231,16 @@ int main() {
       cout << "Username: " <<endl;
       enterUsername(newusername);
     }
+
     cout << "Valid username" << endl;
     while (containsString(newpassword, " ")) {
       cout << "Password cannot contain space, please enter it twice again." << endl;
-      cout << "Password: " <<endl;
+      cout << "Password: " << endl;
       enterUsername(newpassword);
       cout << "Please enter it again: " <<endl;
       enterUsername(passwordcheck);
     }
+
     while (newpassword != passwordcheck) {
       cout << "Two password entered are not the same, please enter it twice again." << endl;
       cout << "Password: " <<endl;
