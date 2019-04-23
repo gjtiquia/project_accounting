@@ -82,6 +82,44 @@ void enterMode(string &mode, string valid_modes[], int mode_size) {
 
 // ================================
 
+// Function: replace one line in a file with a string
+// Input: string filename: eg. "username_passwords.txt"
+//        int line_num: starts from 1.
+//        string newline: newline in a string type variable
+void replaceLine(string filename, int line_num, string newline) {
+  // Create temp.txt, copy all lines of original into it except newline
+  // Delete original file, rename temp.txt
+
+  ifstream original_file;
+  original_file.open(filename);
+
+  ofstream temp;
+  temp.open("temp.txt");
+
+  int current_line = 1;
+  string line;
+  while ( getline(original_file, line) ) {
+    if (current_line == line_num) {
+      temp << newline << endl;
+    }
+    else {
+      temp << line << endl;
+    }
+
+    line_num++;
+  }
+
+  original_file.close();
+  temp.close();
+
+  // They need C-string as parameters
+  remove(filename.c_str());
+  string a = "temp.txt";
+  rename(a.c_str(), filename.c_str());
+}
+
+// ================================
+
 // Function: (1) ADD
 // Input: string username: user's username
 void mode_add(string username) {
@@ -309,12 +347,24 @@ int main() {
       cout << "Confirm Password (enter again): ";
       enterData(passwordcheck);
     }
+
     
     // Add new username and password into username_passwords.txt
     ofstream fout;
     fout.open("username_passwords.txt", ios::app); // REMEMBER TO ADD ios:app for APPEND, OR ELSE WILL OVERWRITE
     fout << newusername << ' ' << newpassword << endl;
     fout.close();
+
+
+    // Add count of usernames
+    int current_count;
+    
+    ifstream fin;
+    fin.open("username_passwords.txt");
+    fin >> current_count;
+    fin.close();
+
+    replaceLine("username_passwords.txt", 1, to_string(current_count + 1)); 
     
     
     // Create account (new txt file)
