@@ -87,12 +87,12 @@ void enterMode(string &mode, string valid_modes[], int mode_size) {
 void mode_add(string username) {
   cout << "ADD mode selected" << endl;
   double amount;
-  int date;
+  string date;
   string time, type, account;
   
   cout << "Please enter amount (possitive if income, negative if expense): ";
   cin >> amount;
-  while (amount == 0){
+  while (amount == 0) {
     cout << endl;
     cout << "Amount cannot be zero, please enter it again: ";
     cin >> amount;
@@ -101,7 +101,7 @@ void mode_add(string username) {
   cout << "Please enter date (eg. please enter 20190423 if the date is 2019/4/23): ";
   cin >> date;
   //date must be 8 digits, cannot start with zero, can add some more condition later such as month<=12 and date<=31...
-  while (date < 10000000){
+  while (date.length() != 8){
     cout << endl;
     cout << "Date must be 8 digits and cannot start with zero, please enter it again: ";
     cin >> date;
@@ -110,10 +110,15 @@ void mode_add(string username) {
   cout << "Please enter time (eg. please enter 1612 if the time is 4:12pm and 0230 if the time is 2:30am): ";
   cin >> time;
   //time must be 4 digits, can add some more condition later such as hr<24 and mins<60...
-  while (time.length() != 4 or stoi(time.substr(0,2)) >= 24 or stoi(time.substr(2,2)) >= 60){
+  while (time.length() != 4) { //or stoi(time.substr(0,2)) >= 24 or stoi(time.substr(2,2)) >= 60){
     cout << endl;
+
+    // test
+    cout << time << endl;
+    cout << "Length: " << time.length() << endl;
+
     cout << "Time must be in 4 digit and , please enter it again: ";
-    cin >> date;
+    cin >> time;
   }
   
   cout << "Please enter type in one word (eg. food, wage...): ";
@@ -206,13 +211,7 @@ int main() {
     cout << "Username: ";
     enterData(username);
     
-    // Restricts space in username
-    while (containsString(username, " ")) {
-      cout << "Username cannot contain space, please enter again." << endl;
-      cout << "Username: " <<endl;
-      enterData(username);
-    }
-  
+      
     // Check if database exists, if not then create empty database
     // username_passwords.txt should contain all usernames and passwords
     // each username should have a .txt file containing their records. 
