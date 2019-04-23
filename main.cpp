@@ -3,12 +3,13 @@
 
 // Group 95
 // (3035563984) TIQUIA Gershom Joel S.
-// (          ) LAU Kwai Lam
+// (3035572856) LAU Kwai Lam
 
 /////////////////////////////////
 
 #include <iostream>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -27,8 +28,7 @@ bool containsString(string line, string part) {
   else {
     return 0;
   }
-} 
-
+}
 // ================================
 
 // Function: Check if array contains string, NOT CASE SENSITIVE
@@ -53,11 +53,10 @@ bool stringInArray(string line, string array[], int array_size) {
 
 // ================================
 
-// Function: Prompts user to enter username
+// Function: Prompts user to enter data with space
 // Input: string username: variable to store username
-void enterUsername(string &username) {
-  cout << "Username: ";
-  getline(cin, username); // use getline() in case user types in space " "
+void enterUsername(string & data) {
+  getline(cin, data); // use getline() in case user types in space " "
 }
 
 // ================================
@@ -136,39 +135,117 @@ void mode_budget_setting(string username) {
 
 // Main Function
 int main() {
-
-  cout << "Welcome to the Accounting System" << endl;
-  
-  // v---- Log In/Sign Up ----v
   string username, password;
-
-  // Enters Username (CANNOT contain space)
-  cout << "Please enter your account username and password." << endl;
-  enterUsername(username);
-
-
-  // Restricts space in username
-  while (containsString(username, " ")) {
-    cout << "Username cannot contain space, please enter again." << endl;
-    enterUsername(username);
+  int command; //store 1 or 2; 
+  cout << "Welcome to the Accounting System" << endl;
+  cout << "Please enter \"1\" for login or \"2\" for create new account" << endl;
+  cin >> command;
+  while(command>2 or command<1){ //check the command
+    cout<<"Invalid command, please enter it again"<<endl;
+    cin >> command;
   }
+  if (command==1){ //login
+    // v---- Log In/Sign Up ----v
 
-  // Check if database exists, if not then create empty database
-  // username_passwords.txt should contain all usernames and passwords
-  // each username should have a .txt file containing their records. 
-  // eg chris_wong have chris_wong.txt
+    //create two dynamic array to save valid username and password
+    ifstream fin("username_passwords.txt");
+    int numberofdata;
+    fin >> numberofdata;
+    string * validusername = new string [numberofdata];
+    string * validpassword = new string [numberofdata];
+    for (int i=0; i<numberofdata; i++){
+      fin >> validusername[i];
+      fin >> validpassword[i];
+    }
+    fin.close();
+    
+    
+    // Enters Username (CANNOT contain space)
+    cout << "Please enter your account username and password." << endl;
+    cout << "Username: " <<endl;
+    enterUsername(username);
+    
+    // Restricts space in username
+    while (containsString(username, " ")) {
+      cout << "Username cannot contain space, please enter again." << endl;
+      cout << "Username: " <<endl;
+      enterUsername(username);
+    }
   
-
-  // Check if username in database
-
-
-  // If in database, enter password
-
-
-  // If not in database, reconfirm username, enter password twice  
+    // Check if database exists, if not then create empty database
+    // username_passwords.txt should contain all usernames and passwords
+    // each username should have a .txt file containing their records. 
+    // eg chris_wong have chris_wong.txt
 
 
-
+    // Check if username in dynamic array
+    for (int i=0;i<numberofdata; i++){
+      if(username==validusername[i]){
+        cout << "Valid Username"<<endl;
+        break;
+      }    
+    }
+    // If in database, enter password
+    cout << "Password: " <<endl;
+    enterUsername(password);
+    
+    //check the password
+    while (password!=validpassword[i]){
+      cout << "Invalid password, please enter it again" <<endl;
+      cout << "Password: " <<endl;
+      enterUsername(password);
+    }
+    cout<<"Valid password"<<endl;
+    
+    //open user's txt file
+    ofstream fout(username+".txt");
+  }
+  if (command==2){ //create new account
+    string newusername, newpassword, passwordcheck;
+    cout << "Please enter your User name once and password twice" <<endl;
+    
+    cout << "Username: " <<endl;
+    enterUsername(newusername);
+    cout << "Password: " <<endl;
+    enterUsername(newpassword);
+    cout << "Please enter it again: " <<endl;
+    enterUsername(passwordcheck);
+    
+    while (containsString(newusername, " ")) {
+      cout << "Username cannot contain space, please enter again." << endl;
+      cout << "Username: " <<endl;
+      enterUsername(newusername);
+    }
+    cout << "Valid username" << endl;
+    while (containsString(newpassword, " ")) {
+      cout << "Password cannot contain space, please enter it twice again." << endl;
+      cout << "Password: " <<endl;
+      enterUsername(newpassword);
+      cout << "Please enter it again: " <<endl;
+      enterUsername(passwordcheck);
+    }
+    while (newpassword != passwordcheck) {
+      cout << "Two password entered are not the same, please enter it twice again." << endl;
+      cout << "Password: " <<endl;
+      enterUsername(newpassword);
+      cout << "Please enter it again: " <<endl;
+      enterUsername(passwordcheck);
+    }
+    cout << "Valid Password" << endl;
+    
+    //add new username and password into username_passwords.txt
+    ofstream fout;
+    fout.open("username_passwords.txt");
+    fout << newusername << ' ' << newpassword << endl;
+    fout.close();
+    
+    
+    //create account (new txt file)
+    ofstream createtxt;
+    createtxt.open(newusername + ".txt");
+    username=newusername;
+  }
+  
   // ^------------------------^
 
 
