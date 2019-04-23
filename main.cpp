@@ -3,12 +3,13 @@
 
 // Group 95
 // (3035563984) TIQUIA Gershom Joel S.
-// (          ) LAU Kwai Lam
+// (3035572856) LAU Kwai Lam
 
 /////////////////////////////////
 
 #include <iostream>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -27,7 +28,6 @@ bool containsString(string line, string part) {
   else {
     return 0;
   }
-} 
 
 // ================================
 
@@ -37,6 +37,7 @@ bool containsString(string line, string part) {
 //        int array_size: number of elements in array
 // Output: 1 if in, 0 if not
 bool stringInArray(string line, string array[], int array_size) {
+} 
   int out = 0;
 
   // !!! need to make sure non-case sensitive
