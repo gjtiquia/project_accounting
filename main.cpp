@@ -159,6 +159,10 @@ int main() {
     }
     fin.close();
     
+    // test validusername
+    for (int i = 0; i < numberofdata; i++) {
+      cout << validusername[i] << endl;
+    }
     
     // Enters Username (CANNOT contain space)
     cout << "Please enter your account username and password." << endl;
@@ -179,11 +183,10 @@ int main() {
 
 
     // Check if username in dynamic array
-    for (int i=0; i < numberofdata; i++){
-      if (username == validusername[i]) {
-        cout << "Valid Username." << endl;
-        break;
-      }    
+    while (not stringInArray(username, validusername, numberofdata)) {
+      cout << "Username not in database" << endl;
+      cout << "Username: ";
+      enterData(username);
     }
 
     // If in database, enter password
