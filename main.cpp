@@ -85,6 +85,46 @@ void enterMode(string &mode, string valid_modes[], int mode_size) {
 // Input: string username: user's username
 void mode_add(string username) {
   cout << "ADD mode selected" << endl;
+  double amount;
+  int date;
+  string time, type, account;
+  
+  cout << "Please enter amount (possitive if income, negative if expense): ";
+  cin >> amount;
+  while (amount == 0){
+    cout << endl;
+    cout << "Amount cannot be zero, please enter it again: ";
+    cin >> amount;
+  }
+  
+  cout << "Please enter date (eg. please enter 20190423 if the date is 2019/4/23): ";
+  cin >> date;
+  //date must be 8 digits, cannot start with zero, can add some more condition later such as month<=12 and date<=31...
+  while (date < 10000000){
+    cout << endl;
+    cout << "Date must be 8 digits and cannot start with zero, please enter it again: ";
+    cin >> date;
+  }
+  
+  cout << "Please enter time (eg. please enter 1612 if the time is 4:12pm and 0230 if the time is 2:30am): ";
+  cin >> time;
+  //time must be 4 digits, can add some more condition later such as hr<24 and mins<60...
+  while (time.length() != 4 or time.substr(0,2) >= 24 or time.substr(2,2)>=60){
+    cout << endl;
+    cout << "Time must be in 4 digit and , please enter it again: ";
+    cin >> date;
+  }
+  
+  cout << "Please enter type in one word (eg. food, wage...): ";
+  cin >> type;
+  
+  cout << "Please enter account in one word (eg. cash, octopus, credit_card...): ";
+  cin >> account;
+  
+  ofstream fout(username + ".txt");
+  fout << amount << ' ' << date << ' ' << time << ' ' << type << ' ' << account << endl;
+  fout.close();
+  
 }
 
 // ================================
@@ -159,10 +199,6 @@ int main() {
     }
     fin.close();
     
-    // test validusername
-    for (int i = 0; i < numberofdata; i++) {
-      cout << validusername[i] << endl;
-    }
     
     // Enters Username (CANNOT contain space)
     cout << "Please enter your account username and password." << endl;
@@ -183,10 +219,11 @@ int main() {
 
 
     // Check if username in dynamic array
-    while (not stringInArray(username, validusername, numberofdata)) {
-      cout << "Username not in database" << endl;
-      cout << "Username: ";
-      enterData(username);
+    for (int i=0; i < numberofdata; i++){
+      if (username == validusername[i]) {
+        cout << "Valid Username." << endl;
+        break;
+      }    
     }
 
     // If in database, enter password
