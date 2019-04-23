@@ -54,18 +54,9 @@ bool stringInArray(string line, string array[], int array_size) {
 // ================================
 
 // Function: Prompts user to enter data with space
-// Input: string username: variable to store username
-void enterUsername(string &username) {
-  cout << "test";
-  getline(cin, username, '\n'); // use getline() in case user types in space " "
-}
-
-// ================================
-
-// Function: Prompts user to enter password
-// Input: string password: variable to store password
-void enterPassword(string &password) {
-  getline(cin, password); // use getline() in case user types in space " "
+// Input: string data: pass-by-reference variable
+void enterData(string &data) {
+  getline(cin, data, '\n'); // use getline() in case user types in space " "
 }
 
 // ================================
@@ -144,13 +135,13 @@ int main() {
   cout << "1) Log In" << endl << "2) Sign Up" << endl;
   cout << "(Enter '1' or '2')" << endl;
   cout << "Command: ";
-  getline(cin, command);
+  enterData(command);
 
   // Restricts Command to 1 or 2
   while (command != "2" && command != "1") {
     cout << "Invalid command, please enter it again." << endl;
     cout << "Command: ";
-    getline(cin, command);
+    enterData(command);
   }
 
   // v---- Log In ----v
@@ -172,13 +163,13 @@ int main() {
     // Enters Username (CANNOT contain space)
     cout << "Please enter your account username and password." << endl;
     cout << "Username: ";
-    enterUsername(username);
+    enterData(username);
     
     // Restricts space in username
     while (containsString(username, " ")) {
       cout << "Username cannot contain space, please enter again." << endl;
       cout << "Username: " <<endl;
-      enterUsername(username);
+      enterData(username);
     }
   
     // Check if database exists, if not then create empty database
@@ -196,15 +187,15 @@ int main() {
     }
 
     // If in database, enter password
-    cout << "Password: " <<endl;
-    enterPassword(password);
+    cout << "Password: " << endl;
+    enterData(password);
     
     // Check the password
     
     //while (password != validpassword[i]) {
     //  cout << "Invalid password, please enter it again" <<endl;
     //  cout << "Password: " <<endl;
-    //  enterUsername(password);
+    //  enterData(password);
     //}
 
     cout << "Valid password" << endl;
@@ -223,33 +214,33 @@ int main() {
     cout << "Please enter your new username and password." <<endl;
     
     cout << "Username: ";
-    enterUsername(newusername);
+    enterData(newusername);
     cout << "Password: ";
-    enterUsername(newpassword);
+    enterData(newpassword);
     cout << "Please enter your password again: ";
-    enterUsername(passwordcheck);
+    enterData(passwordcheck);
     
     while (containsString(newusername, " ")) {
       cout << "Username cannot contain space, please enter again." << endl;
       cout << "Username: " <<endl;
-      enterUsername(newusername);
+      enterData(newusername);
     }
 
     cout << "Valid username" << endl;
     while (containsString(newpassword, " ")) {
       cout << "Password cannot contain space, please enter it twice again." << endl;
       cout << "Password: " << endl;
-      enterUsername(newpassword);
+      enterData(newpassword);
       cout << "Please enter it again: " <<endl;
-      enterUsername(passwordcheck);
+      enterData(passwordcheck);
     }
 
     while (newpassword != passwordcheck) {
       cout << "Two password entered are not the same, please enter it twice again." << endl;
       cout << "Password: " <<endl;
-      enterUsername(newpassword);
+      enterData(newpassword);
       cout << "Please enter it again: " <<endl;
-      enterUsername(passwordcheck);
+      enterData(passwordcheck);
     }
     cout << "Valid Password" << endl;
     
