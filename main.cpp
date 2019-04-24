@@ -57,7 +57,10 @@ bool stringInArray(string line, string array[], int array_size) {
 // Function: Prompts user to enter data with space
 // Input: string data: pass-by-reference variable
 void enterData(string &data) {
-  getline(cin, data, '\n'); // use getline() in case user types in space " "
+  getline(cin, data); // use getline() in case user types in space " "
+  if (data.length()==0){
+    getline(cin, data);
+  }
 }
 
 // ================================
@@ -75,10 +78,13 @@ void enterMode(string &mode, string valid_modes[], int mode_size) {
     else {
       cout << valid_modes[i] << endl;
     }
-  }1
+  }
 
   cout << "Mode: ";
   getline(cin, mode); // use getline() in case user types in space " "
+  if (mode.length()==0){
+    getline(cin, mode);
+  }
 }
 
 // ================================
@@ -126,8 +132,7 @@ void replaceLine(string filename, int line_num, string newline) {
 void mode_add(string username) {
   cout << "ADD mode selected" << endl;
   double amount;
-  string date;
-  string time, type, account;
+  string date, time, type, account;
   
   cout << "Please enter amount (possitive if income, negative if expense): ";
   cin >> amount;
@@ -161,10 +166,20 @@ void mode_add(string username) {
   }
   
   cout << "Please enter type in one word (eg. food, wage...): ";
-  cin >> type;
+  enterData(type);
+  while (containsString(type, " ")) {
+      cout << "Type cannot contain space, please enter it again." << endl;
+      cout << "Please enter type in one word (eg. food, wage...): ";
+      enterData(type);
+  }
   
   cout << "Please enter account in one word (eg. cash, octopus, credit_card...): ";
-  cin >> account;
+  enterData(account);
+  while (containsString(account, " ")) {
+      cout << "Account cannot contain space, please enter it again." << endl;
+      cout << "Please enter account in one word (eg. cash, octopus, credit_card...): ";
+      enterData(account);
+  }
   
   ofstream fout(username + ".txt", ios::app); // REMEMBER TO ADD ios::app for APPEND, OR ELSE WILL OVERWRITE
   fout << amount << ' ' << date << ' ' << time << ' ' << type << ' ' << account << endl;
@@ -177,15 +192,132 @@ void mode_add(string username) {
   
   
   replaceLine(username + ".txt", 1, to_string( numberofdata+1));
+  cout << "Record added successfully" <<endl;
   
 }
 
 // ================================
+// functions created to help function 2
+void deletefromdoublearray(double arr[], int len, int recordtodelete){
+  if(recordtodelete == len-1){
+    arr[recordtodelete] = NULL;
+  }
+  else{
+    for (int i=recordtodelete; i<len-1; i++){
+      arr[i]=arr[i+1];
+    }
+    arr[len-1]=Null;
+  }
+}
+
+void deletefromstringarray(dstring arr[], int len, int recordtodelete){
+  if(recordtodelete == len-1){
+    arr[recordtodelete] = NULL;
+  }
+  else{
+    for (int i=recordtodelete; i<len-1; i++){
+      arr[i]=arr[i+1];
+    }
+    arr[len-1] = Null;
+  }
+}
+
 
 // Function: (2)
 // Input: string username: user's username
 void mode_delete(string username) {
   cout << "DELETE mode selected" << endl;
+  
+  ifstream fin(username + ".txt");
+  int numberofdata;
+  fin >> numberofdata;
+  
+  //create 4 dynamic arrays
+  double * amount = new double [numberofdata];
+  string * date = new string [numberofdata];
+  string * time = new string [numberofdata];
+  string * type = new string [numberofdata];
+  string * account = new string [numberofdata];
+  
+  //input all data into array
+  for (int i=0; i<numberofdata; i++){
+    fin >> amount[i];
+    fin >> date[i];
+    fin >> time[i];
+    fin >> type[i];
+    fin >> account[i];  
+  }
+  fin.close();
+  
+  cout << "How many record you want to delete? " << endl;
+  int num;
+  cin >> num;
+  for (int k=0; k<num ;k++){
+    cout << "Number of record to delete: " << num-k << endl;
+    cout << "Find the record that you want to delete by\n1\) amount\n2\) date\n3\) type\n3\)account" << endl;
+    int command;
+    cin >> command;
+    if (command==1){
+      
+      //input range
+      double max, min;
+      cout << "What is the range of the ammount?" << endl;
+      cout << "From: ";
+      cin >> min;
+      cout << " to: ";
+      cin >> max;
+      
+      //check min and max
+      if(min > max){
+        double temp;
+        temp = max;
+        max = min;
+        min = temp; 
+      }
+      
+      //output records
+      for (int i = 0; i < numberofdata; i++){
+        if(amount[i] >= min and amount[i] <= max){
+          cout << "Record number " << i+1 << ") " << amount[i] << ' ' << date[i] <<' '<< timr[i] <<' '<< type[i] <<' '<< account[i] <<endl;
+        }
+      }
+      cout << "Which record you want to delete (please input the record number)? ";
+      int recordtodelete;
+      cin >> recordtodelete;
+      recordtodelete--;
+    }else if (command ==2){
+    
+    }else if (commmand ==3){
+    
+    }else if (command ==4){
+    
+    }
+    //delete the record choosen
+    deletefromdoublearray(amount, numberofdata, recordtodelete);
+    deletefromstringarray(date, numberofdata, recordtodelete);
+    deletefromstringarray(time, numberofdata, recordtodelete);
+    deletefromstringarray(type, numberofdata, recordtodelete);
+    deletefromstringarray(account, numberofdata, recordtodelete);
+    numberofdata--;
+     
+  //rewrite username.txt
+  ofstream fout(username + ".txt");
+  fout << numberofdata <<endl;
+  for (int i=0; i<numberofdata; i++){
+    fout << amount[i] << ' ' << date[i] <<' '<< timr[i] <<' '<< type[i] <<' '<< account[i] <<endl;
+  }
+  fout.close();
+    
+    
+    
+  }
+ 
+  //delete dynamic array
+  delete [] amount;
+  delete [] date;
+  delete [] time;
+  delete [] type;
+  delete [] account;
 }
 
 // ================================
