@@ -527,14 +527,16 @@ int main() {
   // Can re-input if wrong
 
   string mode;
-  int mode_size = 12;
+  int mode_size = 6 * 2;
   string valid_modes[] = {
     "1", "Add", 
     "2", "Delete", 
     "3", "Edit", 
     "4", "View",
-    "5", "Budget Setting",
-    "6", "Exit" // This should always be last
+    "5", "Report",
+    "6", "Budget Setting",
+    "7", "Trend",
+    "8", "Exit" // This should always be last
   };
 
   enterMode(mode, valid_modes, mode_size); // changes string mode "abc" to "Abc". ie UPPER + (n-1)*LOWER
@@ -544,7 +546,7 @@ int main() {
     enterMode(mode, valid_modes, mode_size);
   }
   
-  while (not (mode == valid_modes[10]) && not (mode == valid_modes[11]) ) {
+  while (not (mode == valid_modes[mode_size - 2]) && not (mode == valid_modes[mode_size - 1]) ) {
 
     if (mode == valid_modes[0] || mode == valid_modes[1]) {
       mode_add(username);
