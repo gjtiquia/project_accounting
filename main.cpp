@@ -199,26 +199,22 @@ void mode_add(string username) {
 // ================================
 // functions created to help function 2
 void deletefromdoublearray(double arr[], int len, int recordtodelete){
-  if(recordtodelete == len-1){
-    arr[recordtodelete] = NULL;
-  }
-  else{
+  if(recordtodelete < len-1){
+    
     for (int i=recordtodelete; i<len-1; i++){
       arr[i]=arr[i+1];
     }
-    arr[len-1]=Null;
+    
   }
 }
 
-void deletefromstringarray(dstring arr[], int len, int recordtodelete){
+void deletefromstringarray(string arr[], int len, int recordtodelete){
   if(recordtodelete == len-1){
-    arr[recordtodelete] = NULL;
-  }
-  else{
+    
     for (int i=recordtodelete; i<len-1; i++){
       arr[i]=arr[i+1];
     }
-    arr[len-1] = Null;
+    
   }
 }
 
@@ -253,8 +249,13 @@ void mode_delete(string username) {
   int num;
   cin >> num;
   for (int k=0; k<num ;k++){
+    int recordtodelete;
     cout << "Number of record to delete: " << num-k << endl;
-    cout << "Find the record that you want to delete by\n1\) amount\n2\) date\n3\) type\n3\)account" << endl;
+    cout << "Find the record that you want to delete by"<<endl;
+    cout << "1) amount"<<endl;
+    cout << "2) date" <<endl;
+    cout << "3) type" <<endl;
+    cout << "3) account" << endl;
     int command;
     cin >> command;
     if (command==1){
@@ -264,7 +265,7 @@ void mode_delete(string username) {
       cout << "What is the range of the ammount?" << endl;
       cout << "From: ";
       cin >> min;
-      cout << " to: ";
+      cout << "To: ";
       cin >> max;
       
       //check min and max
@@ -278,16 +279,16 @@ void mode_delete(string username) {
       //output records
       for (int i = 0; i < numberofdata; i++){
         if(amount[i] >= min and amount[i] <= max){
-          cout << "Record number " << i+1 << ") " << amount[i] << ' ' << date[i] <<' '<< timr[i] <<' '<< type[i] <<' '<< account[i] <<endl;
+          cout << "Record number " << i+1 << ") " << amount[i] << ' ' << date[i] <<' '<< time[i] <<' '<< type[i] <<' '<< account[i] <<endl;
         }
       }
       cout << "Which record you want to delete (please input the record number)? ";
-      int recordtodelete;
+      
       cin >> recordtodelete;
       recordtodelete--;
     }else if (command ==2){
     
-    }else if (commmand ==3){
+    }else if (command ==3){
     
     }else if (command ==4){
     
@@ -304,7 +305,7 @@ void mode_delete(string username) {
   ofstream fout(username + ".txt");
   fout << numberofdata <<endl;
   for (int i=0; i<numberofdata; i++){
-    fout << amount[i] << ' ' << date[i] <<' '<< timr[i] <<' '<< type[i] <<' '<< account[i] <<endl;
+    fout << amount[i] << ' ' << date[i] <<' '<< time[i] <<' '<< type[i] <<' '<< account[i] <<endl;
   }
   fout.close();
     
