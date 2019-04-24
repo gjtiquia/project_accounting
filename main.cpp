@@ -67,6 +67,7 @@ void enterData(string &data) {
 //        string valid_modes[]: available modes to choose
 //        int mode_size: number of modes * 2
 void enterMode(string &mode, string valid_modes[], int mode_size) {
+  cout << "Select a Mode" << endl;
   for (int i = 0; i < mode_size; i++) {
     if (i % 2 == 0) {
       cout << valid_modes[i] << ") ";
@@ -74,7 +75,7 @@ void enterMode(string &mode, string valid_modes[], int mode_size) {
     else {
       cout << valid_modes[i] << endl;
     }
-  }
+  }1
 
   cout << "Mode: ";
   getline(cin, mode); // use getline() in case user types in space " "
@@ -106,7 +107,7 @@ void replaceLine(string filename, int line_num, string newline) {
       temp << line << endl;
     }
 
-    line_num++;
+    current_line++;
   }
 
   original_file.close();
@@ -168,6 +169,14 @@ void mode_add(string username) {
   ofstream fout(username + ".txt", ios::app); // REMEMBER TO ADD ios::app for APPEND, OR ELSE WILL OVERWRITE
   fout << amount << ' ' << date << ' ' << time << ' ' << type << ' ' << account << endl;
   fout.close();
+  
+  ifstream fin(username + ".txt");
+  int numberofdata;
+  fin >> numberofdata;
+  fin.close();
+  
+  
+  replaceLine(username + ".txt", 1, to_string( numberofdata+1));
   
 }
 
@@ -370,13 +379,14 @@ int main() {
     // Create account (new txt file)
     ofstream createtxt;
     createtxt.open(newusername + ".txt");
+    createtxt << '0' << endl;
     username = newusername;
 
     cout << "Account Successfully Created" << endl;
   }
   
   // ^------------------------^
-
+  cout << "Welcome " << username << endl; 
 
   // v---- Select Mode ----v
   // Including: Add, Delete, Edit, View, Budget Setting, Exit
@@ -394,7 +404,6 @@ int main() {
     "6", "Exit" // This should always be last
   };
 
-  cout << "Select a Mode" << endl;
   enterMode(mode, valid_modes, mode_size); // changes string mode "abc" to "Abc". ie UPPER + (n-1)*LOWER
 
   while (not stringInArray(mode, valid_modes, mode_size)) {
@@ -421,7 +430,6 @@ int main() {
     }
 
     // Re-enter mode
-    cout << "Select a Mode" << endl;
     enterMode(mode, valid_modes, mode_size);
   }
 
