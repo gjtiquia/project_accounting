@@ -254,44 +254,72 @@ void mode_delete(string username) {
     cout << "Find the record that you want to delete by"<<endl;
     cout << "1) amount"<<endl;
     cout << "2) date" <<endl;
-    cout << "3) type" <<endl;
-    cout << "3) account" << endl;
+    
     int command;
     cin >> command;
     if (command==1){
       
       //input range
       double max, min;
-      cout << "What is the range of the ammount?" << endl;
-      cout << "From: ";
-      cin >> min;
-      cout << "To: ";
-      cin >> max;
-      
-      //check min and max
-      if(min > max){
-        double temp;
-        temp = max;
-        max = min;
-        min = temp; 
+      int numberoutput=0;
+      while (numberoutput==0){
+        cout << "What is the range of the ammount?" << endl;
+        cout << "From: ";
+        cin >> min;
+        cout << "To: ";
+        cin >> max;
+
+        //check min and max
+        if(min > max){
+          double temp;
+          temp = max;
+          max = min;
+          min = temp; 
+        }
+
+        //output records
+        for (int i = 0; i < numberofdata; i++){
+          if(amount[i] >= min and amount[i] <= max){
+            cout << "Record number " << i+1 << ") " << amount[i] << ' ' << date[i] <<' '<< time[i] <<' '<< type[i] <<' '<< account[i] <<endl;
+            numberoutput++;
+          }
+        }
       }
+        cout << "Which record you want to delete (please input the record number)? ";
+
+        cin >> recordtodelete;
+        recordtodelete--;
       
-      //output records
-      for (int i = 0; i < numberofdata; i++){
-        if(amount[i] >= min and amount[i] <= max){
-          cout << "Record number " << i+1 << ") " << amount[i] << ' ' << date[i] <<' '<< time[i] <<' '<< type[i] <<' '<< account[i] <<endl;
+    }else if (command ==2){
+      
+      //input target date
+      int numberoutput = 0;
+      while(numberoutput==0){
+        cout << "Please in put the date of the record you want to delete (8 digits): " ;
+        string targetdate;
+        cin >> targetdate;
+
+        //date must be 8 digits, cannot start with zero, can add some more condition later such as month<=12 and date<=31...
+        while (targetdate.length() != 8){
+          cout << endl;
+          cout << "Date must be 8 digits and cannot start with zero, please enter it again: ";
+          cin >> targetdate;
+        }
+
+        //output records
+      
+        for (int i = 0; i < numberofdata; i++){
+          if(date[i] == targetdate){
+            cout << "Record number " << i+1 << ") " << amount[i] << ' ' << date[i] <<' '<< time[i] <<' '<< type[i] <<' '<< account[i] <<endl;
+            numberoutput++;
+          }
         }
       }
       cout << "Which record you want to delete (please input the record number)? ";
       
       cin >> recordtodelete;
       recordtodelete--;
-    }else if (command ==2){
-    
-    }else if (command ==3){
-    
-    }else if (command ==4){
-    
+      
     }
     //delete the record choosen
     deletefromdoublearray(amount, numberofdata, recordtodelete);
