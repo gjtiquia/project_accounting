@@ -595,6 +595,18 @@ void mode_view(string username) {
   ifstream fin(username + ".txt");
   int numberofdata;
   fin >> numberofdata;
+
+  // If no data records at all, close
+  if (numberofdata == 0) {
+    cout << "No records found." << endl;
+    fin.close();
+    return;
+  }
+
+  // Else, show num of data
+  else {
+    cout << numberofdata << " record(s) found." << endl;
+  }
   
   //create 4 dynamic arrays
   double * amount = new double [numberofdata];
@@ -618,6 +630,7 @@ void mode_view(string username) {
   cout << "1) amount" << endl;
   cout << "2) date" << endl;
   cout << "3) all" << endl;
+  cout << "Enter Command: ";
   string command;
   cin >> command;
   
