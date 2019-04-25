@@ -328,13 +328,17 @@ void mode_delete(string username) {
     int recordtodelete;
     cout << "Number of record to delete: " << num-k << endl;
     cout << "Find the record that you want to delete by"<<endl;
-    cout << "1) amount"<<endl;
-    cout << "2) date" <<endl;
-    cout << "0) stop delete" << endl;
+    cout << "1) Amount"<<endl;
+    cout << "2) Date" <<endl;
+    cout << "3) All" << endl;
+    cout << "0) Exit DELETE Mode" << endl;
     
+    cout << "(Shown in this format: | Amount | Date(yyyymmdd) | Time(hhmm) | Type | Account |)" << endl;
+    
+    cout << "Command: ";
     string command;
     enterData(command);
-    while (not(command =="1" or command=="2"  or command =="0")){
+    while (not(command =="1" or command == "3" or command=="2"  or command =="0")){
       cout << "Invalid command, please input it again: ";
       cin >> command;
     }
@@ -345,6 +349,12 @@ void mode_delete(string username) {
       int numberoutput=0;
       while (numberoutput==0){
         cout << "What is the range of the ammount?" << endl;
+
+        // Give a range for user to choose from
+        double current_min = minInColumn(username + ".txt", 0);
+        double current_max = maxInColumn(username + ".txt", 0);
+        cout << "(Choose between " << current_min << " ~ " << current_max << ")" << endl;
+
         cout << "From: ";
         cin >> min;
         cout << "To: ";
@@ -366,7 +376,7 @@ void mode_delete(string username) {
           }
         }
       }
-        cout << "Which record you want to delete (please input the record number)? ";
+        cout << "Which record you want to delete (please input the record number)? :";
 
         cin >> recordtodelete;
         recordtodelete--;
@@ -377,7 +387,14 @@ void mode_delete(string username) {
       int numberoutput = 0;
       while(numberoutput==0){
         cout << "Please in put the date of the record you want to delete (8 digits): " ;
+        
+        // Give a range for user to choose from
+        double current_min = minInColumn(username + ".txt", 1);
+        double current_max = maxInColumn(username + ".txt", 1);
+        cout << "(Choose between " << setprecision(8) << current_min << " ~ " << setprecision(8) << current_max << ")" << endl;
+
         string targetdate;
+        cout << "Date: ";
         cin >> targetdate;
 
         //date must be 8 digits, cannot start with zero, can add some more condition later such as month<=12 and date<=31...
@@ -396,7 +413,7 @@ void mode_delete(string username) {
           }
         }
       }
-      cout << "Which record you want to delete (please input the record number)? ";
+      cout << "Which record you want to delete (please input the record number)? :";
       
       cin >> recordtodelete;
       recordtodelete--;
@@ -404,6 +421,17 @@ void mode_delete(string username) {
     }else if (command == "0"){
       break;
     }
+
+    else if (command == "3") {
+      for (int i = 0; i < numberofdata; i++){
+        cout << "Record number " << i+1 << ") " << amount[i] << ' ' << date[i] <<' '<< time[i] <<' '<< type[i] <<' '<< account[i] <<endl;
+      }
+      cout << "Which record you want to delete (please input the record number)? :";
+
+      cin >> recordtodelete;
+      recordtodelete--;
+    }
+
     //delete the record choosen
     deletefromdoublearray(amount, numberofdata, recordtodelete);
     deletefromstringarray(date, numberofdata, recordtodelete);
@@ -461,22 +489,27 @@ void mode_edit(string username) {
   }
   fin.close();
   
-  cout << "How many record you want to edit? " << endl;
+  cout << "How many record(s) do you want to edit? " << endl;
   int num;
+  cout << "Input Number: ";
   cin >> num;
   for (int k=0; k<num ;k++){
     int recordtoedit;
     cout << "Number of record to edit: " << num-k << endl;
     cout << "Find the record that you want to edit by"<<endl;
-    cout << "1) amount"<< endl;
-    cout << "2) date" << endl;
-    cout << "3) all" << endl;
-    cout << "0) stop edit" << endl;
+    cout << "1) Amount"<< endl;
+    cout << "2) Date" << endl;
+    cout << "3) All" << endl;
+    cout << "0) Exit EDIT Mode" << endl;
     
+    cout << "(Shown in this format: | Amount | Date(yyyymmdd) | Time(hhmm) | Type | Account |)" << endl;
+
     string command;
+    cout << "Command: ";
     enterData (command);
     while (not(command =="1" or command=="2" or command=="3" or command =="0")){
       cout << "Invalid command, please input it again: ";
+      cout << "Command: ";
       cin >> command;
     }
   
@@ -487,6 +520,12 @@ void mode_edit(string username) {
       int numberoutput=0;
       while (numberoutput==0){
         cout << "What is the range of the ammount?" << endl;
+        
+        // Give a range for user to choose from
+        double current_min = minInColumn(username + ".txt", 0);
+        double current_max = maxInColumn(username + ".txt", 0);
+        cout << "(Choose between " << current_min << " ~ " << current_max << ")" << endl;
+
         cout << "From: ";
         cin >> min;
         cout << "To: ";
@@ -509,7 +548,7 @@ void mode_edit(string username) {
         }
       }
       cout << "Which record you want to edit (please input the record number)? ";
-
+      cout << "Number: ";
       cin >> recordtoedit;
       recordtoedit--;
       
@@ -519,6 +558,12 @@ void mode_edit(string username) {
       int numberoutput = 0;
       while(numberoutput==0){
         cout << "Please in put the date of the record you want to edit (8 digits): " ;
+        
+        // Give a range for user to choose from
+        double current_min = minInColumn(username + ".txt", 1);
+        double current_max = maxInColumn(username + ".txt", 1);
+        cout << "(Choose between " << setprecision(8) << current_min << " ~ " << setprecision(8) << current_max << ")" << endl;
+
         string targetdate;
         cin >> targetdate;
 
@@ -539,7 +584,7 @@ void mode_edit(string username) {
         }
       }
       cout << "Which record you want to edit (please input the record number)? ";
-      
+      cout << "Number: ";
       cin >> recordtoedit;
       recordtoedit--;
       
@@ -552,7 +597,7 @@ void mode_edit(string username) {
      
       }
       cout << "Which record you want to edit (please input the record number)? ";
-      
+      cout << "Number: ";
       cin >> recordtoedit;
       recordtoedit--;
     }
@@ -570,6 +615,7 @@ void mode_edit(string username) {
     cout << "4) type" << endl;
     cout << "5) account" << endl;
     string column;
+    cout << "Column: ";
     cin >> column;
     while (not(column =="1" or column=="2" or column=="3" or column=="4" or column=="5")){
       cout << "Invalid column seleted, please input it again: ";
@@ -579,7 +625,7 @@ void mode_edit(string username) {
     //edit the column seleted
     if (column == "1"){
       double newamount;
-      cout << "Please enter the new amount (possitive if income, negative if expense): ";
+      cout << "Please enter the new amount (positive if income, negative if expense): ";
       cin >> newamount;
       while (newamount == 0) {
         cout << endl;
@@ -606,12 +652,6 @@ void mode_edit(string username) {
       cin >> newtime;
       //time must be 4 digits, can add some more condition later such as hr<24 and mins<60...
       while (newtime.length() != 4) { //or stoi(time.substr(0,2)) >= 24 or stoi(time.substr(2,2)) >= 60){
-        cout << endl;
-
-        // test
-        cout << newtime << endl;
-        cout << "Length: " << newtime.length() << endl;
-
         cout << "Time must be in 4 digit and , please enter it again: ";
         cin >> newtime;
       }
@@ -692,7 +732,7 @@ void mode_view(string username) {
   string * account = new string [numberofdata];
   
   //input all data into array
-  for (int i=0; i<numberofdata; i++){
+  for (int i=0; i<numberofdata; i++) {
     fin >> amount[i];
     fin >> date[i];
     fin >> time[i];
