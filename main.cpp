@@ -694,15 +694,30 @@ void mode_view(string username) {
 
 // ================================
 
+
+
+// ================================
 // Function: (5)
+void mode_report(string username){
+  cout << "REPORT mode selected" << endl;
+  
+}
+// ================================
+
+
+// Function: (6)
 // Input: string username: user's username
 void mode_budget_setting(string username) {
   cout << "BUDGET SETTING mode selected" << endl;
 }
-
 // ================================
 
 
+// Function: (7)
+void mode_trend (string username){
+  cout << "TREND mode seleted" << endl;
+}
+// ================================
 /////////////////////////////////
 
 
@@ -882,7 +897,7 @@ int main() {
   // Can re-input if wrong
 
   string mode;
-  int mode_size = 6 * 2;
+  int mode_size = 8 * 2;
   string valid_modes[] = {
     "1", "Add", 
     "2", "Delete", 
@@ -916,9 +931,17 @@ int main() {
       mode_view(username);
     }
     else if (mode == valid_modes[8] || mode == valid_modes[9]) {
+      mode_report(username);
+    }
+    else if (mode == valid_modes[10] || mode == valid_modes[11]) {
       mode_budget_setting(username);
     }
-
+    else if (mode == valid_modes[12] || mode == valid_modes[13]) {
+      mode_trend(username);
+    }
+    
+    
+    
     // Re-enter mode
     enterMode(mode, valid_modes, mode_size);
   }
