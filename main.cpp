@@ -142,24 +142,23 @@ double minInColumn(string filename, int column) {
   fin >> numberofdata;
 
   double temp;
+  string trash;
   for (int i = 0; i < 5 * numberofdata; i++) {
-    // Set initial min
+    if (i % 5 >= 0 && i % 5 <= 2) {
+      fin >> temp;
+    }    
+    else {
+      fin >> trash;
+    }
+
     if (i < 5 && (i - column) % 5 == 0) {
-      fin >> min;
-      cout << "Min initialized = " << min << endl;
+      min = temp;
     }  
     else if ((i - column) % 5 == 0){
-      fin >> temp;
       if (temp < min) {
         min = temp;
       }
-      cout << "New min = " << min << endl;
     }
-    else {
-      double trash;
-      fin >> trash;
-      cout << "Trash = " << trash << endl;
-    }    
   }
 
   fin.close();
@@ -182,20 +181,22 @@ double maxInColumn(string filename, int column) {
   fin >> numberofdata;
 
   double temp;
-  for (int i = 0; i < numberofdata; i++) {
-    // Set initial max
-    if (i < 5 && (i - column) % 5 == 0) {
-      fin >> max;
-    }
-    else if ((i - column) % 5 == 0) {
+  string trash;
+  for (int i = 0; i < 5 * numberofdata; i++) {
+    if (i % 5 >= 0 && i % 5 <= 2) {
       fin >> temp;
+    }
+    else {
+      fin >> trash;
+    }
+
+    if (i < 5 && (i - column) % 5 == 0) {
+      max = temp;
+    }
+    else if ((i - column) % 5 == 0){
       if (temp > max) {
         max = temp;
       }
-    }
-    else {
-      double trash;
-      fin >> trash;
     }
   }
 
@@ -702,9 +703,9 @@ void mode_view(string username) {
   
   //select and test the command
   cout << "View the record by" << endl;
-  cout << "1) amount" << endl;
-  cout << "2) date" << endl;
-  cout << "3) all" << endl;
+  cout << "1) Amount" << endl;
+  cout << "2) Date" << endl;
+  cout << "3) All" << endl;
   cout << "Enter Command: ";
   string command;
   cin >> command;
@@ -741,8 +742,14 @@ void mode_view(string username) {
       }
 
       //output records
+      bool formatted = 0;
       for (int i = 0; i < numberofdata; i++){
         if(amount[i] >= min and amount[i] <= max){
+          if (not formatted) {
+            cout << "| Amount | Date(yyyymmdd) | Time(hhmm) | Type | Account |" << endl;
+            formatted = 1;
+          }
+
           cout << "Record number " << i+1 << ") " << amount[i] << ' ' << date[i] <<' '<< time[i] <<' '<< type[i] <<' '<< account[i] <<endl;
           numberoutput++;
         }
@@ -773,9 +780,13 @@ void mode_view(string username) {
       }
 
      //output records
-     
+      bool formatted = 0;
       for (int i = 0; i < numberofdata; i++){
-        if(date[i] == targetdate){
+        if(date[i] == targetdate) {
+          if (not formatted) {
+            cout << "| Amount | Date(yyyymmdd) | Time(hhmm) | Type | Account |" << endl;
+            formatted = 1;
+          }
           cout << "Record number " << i+1 << ") " << amount[i] << ' ' << date[i] <<' '<< time[i] <<' '<< type[i] <<' '<< account[i] <<endl;
           numberoutput++;
         }
@@ -785,6 +796,7 @@ void mode_view(string username) {
 
   // All
   else if(command == "3"){
+    cout << "| Amount | Date(yyyymmdd) | Time(hhmm) | Type | Account |" << endl;
     for (int i = 0; i < numberofdata; i++){   
       cout << "Record number " << i+1 << ") " << amount[i] << ' ' << date[i] <<' '<< time[i] <<' '<< type[i] <<' '<< account[i] <<endl;
     }  
@@ -1030,10 +1042,10 @@ int main() {
   }
   
   // ^------------------------^
-  cout << "Welcome " << username << endl; 
+  cout << "Welcome " << username << "!" << endl; 
 
   // v---- Select Mode ----v
-  // Including: Add, Delete, Edit, View, Budget Setting, Exit
+  // Including: Add, Delete, Edit, View, Report, Budget Setting, Trend, Exit
   // User can either input number or word. Eg. "1" or "Add" are equivalent
   // Can re-input if wrong
 
