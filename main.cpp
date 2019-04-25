@@ -927,17 +927,51 @@ int main() {
 
   if (command == "2") {
     string newusername, newpassword, passwordcheck;
+    
+    // Saves array of current usernames
+    ifstream taken("username_passwords.txt");
+    int numberofdata;
+    taken >> numberofdata;
+    string * taken_usernames = new string [numberofdata];
+
+    for (int i = 0; i < 2 * numberofdata; i++) {
+      string temp;
+      taken >> temp;
+      taken_usernames[i] = temp;
+      taken >> temp; // trash the password
+    }  
+    
+    taken.close();
+
     cout << "Please enter your new username and password." <<endl;
 
-    // Username, CANNOT CONTAIN SPACE    
+    // Username, CANNOT CONTAIN SPACE, Cannot have duplicates, max 3 attempts    
     cout << "Username: ";
     enterData(newusername);
 
-    while (containsString(newusername, " ")) {
-      cout << "Username cannot contain space, please enter again." << endl;
+    int attempts = 3;
+    while (containsString(newusername, " ") || stringInArray(newusername, taken_usernames, numberofdata)) {
+      attempts--;
+
+      if (attempts == 0) {
+        cout << "Exiting program..." << endl;
+        exit(0);
+      }
+
+      if (stringInArray(newusername, taken_usernames, numberofdata)) {
+        cout << "Username taken, please enter again." << endl;
+      }
+      else {
+        cout << "Username cannot contain space, please enter again." << endl;
+      } 
+
+      cout << "(Attempts left: " << attempts << ")" << endl;
+
       cout << "Username: ";
       enterData(newusername);
     }
+    
+    delete [] taken_usernames;
 
     // Password, CANNOT CONTAIN SPACE
     cout << "Password: ";
