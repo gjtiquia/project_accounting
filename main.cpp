@@ -11,6 +11,7 @@
 #include <string>
 #include <fstream>
 #include <stdlib.h>
+#include <iomanip>
 
 using namespace std;
 
@@ -127,6 +128,83 @@ void replaceLine(string filename, int line_num, string newline) {
 
 // ================================
 
+// Function: finds the min value in a certain column of records
+// Input: string filename: filename of record to search, eg. chris_wong.txt
+//        int column: certain column to find, ie. 0 = amount, 1 = date, 2 = time, 3 = type, 4 = account
+// Output: double: min value
+double minInColumn(string filename, int column) {
+  double min;
+  int numberofdata; // Assume > 0
+
+  ifstream fin;
+  fin.open(filename);
+
+  fin >> numberofdata;
+
+  double temp;
+  for (int i = 0; i < 5 * numberofdata; i++) {
+    // Set initial min
+    if (i < 5 && (i - column) % 5 == 0) {
+      fin >> min;
+      cout << "Min initialized = " << min << endl;
+    }  
+    else if ((i - column) % 5 == 0){
+      fin >> temp;
+      if (temp < min) {
+        min = temp;
+      }
+      cout << "New min = " << min << endl;
+    }
+    else {
+      double trash;
+      fin >> trash;
+      cout << "Trash = " << trash << endl;
+    }    
+  }
+
+  fin.close();
+  return min;
+}
+
+// ================================
+
+// Function: finds the max value in a certain column of records
+// Input: string filename: filename of record to search, eg. chris_wong.txt
+//        int column: certain column to find, ie. 0 = amount, 1 = date, 2 = time, 3 = type, 4 = account
+// Output: double: max value
+double maxInColumn(string filename, int column) {
+  double max;
+  int numberofdata; // Assume > 0
+
+  ifstream fin;
+  fin.open(filename);
+
+  fin >> numberofdata;
+
+  double temp;
+  for (int i = 0; i < numberofdata; i++) {
+    // Set initial max
+    if (i < 5 && (i - column) % 5 == 0) {
+      fin >> max;
+    }
+    else if ((i - column) % 5 == 0) {
+      fin >> temp;
+      if (temp > max) {
+        max = temp;
+      }
+    }
+    else {
+      double trash;
+      fin >> trash;
+    }
+  }
+
+  fin.close();
+  return max;
+}
+
+// ================================
+
 // Function: (1) ADD
 // Input: string username: user's username
 void mode_add(string username) {
@@ -134,7 +212,7 @@ void mode_add(string username) {
   double amount;
   string date, time, type, account;
   
-  cout << "Please enter amount (possitive if income, negative if expense): ";
+  cout << "Please enter amount (positive if income, negative if expense): ";
   cin >> amount;
   while (amount == 0) {
     cout << endl;
@@ -156,11 +234,6 @@ void mode_add(string username) {
   //time must be 4 digits, can add some more condition later such as hr<24 and mins<60...
   while (time.length() != 4) { //or stoi(time.substr(0,2)) >= 24 or stoi(time.substr(2,2)) >= 60){
     cout << endl;
-
-    // test
-    cout << time << endl;
-    cout << "Length: " << time.length() << endl;
-
     cout << "Time must be in 4 digit and , please enter it again: ";
     cin >> time;
   }
@@ -197,6 +270,7 @@ void mode_add(string username) {
 }
 
 // ================================
+
 // functions created to help function 2
 void deletefromdoublearray(double arr[], int len, int recordtodelete){
   if(recordtodelete < len-1){
@@ -218,6 +292,7 @@ void deletefromstringarray(string arr[], int len, int recordtodelete){
   }
 }
 
+// ================================
 
 // Function: (2)
 // Input: string username: user's username
@@ -640,11 +715,18 @@ void mode_view(string username) {
   }
   
   //print output
+  // Amount
   if (command == "1"){
     double max, min;
     int numberoutput=0;
     while (numberoutput==0){
       cout << "What is the range of the ammount?" << endl;
+
+      // Give a range for user to choose from
+      double current_min = minInColumn(username + ".txt", 0);
+      double current_max = maxInColumn(username + ".txt", 0);
+      cout << "(Choose between " << current_min << " ~ " << current_max << ")" << endl;
+
       cout << "From: ";
       cin >> min;
       cout << "To: ";
@@ -666,11 +748,20 @@ void mode_view(string username) {
         }
       }
     }
-  }else if(command == "2"){
+  }
+
+  // Date
+  else if(command == "2"){
     
       int numberoutput = 0;
     while(numberoutput==0){
       cout << "Please in put the date of the record you want to view (8 digits): " ;
+
+      // Give a range for user to choose from
+      double current_min = minInColumn(username + ".txt", 1);
+      double current_max = maxInColumn(username + ".txt", 1);
+      cout << "(Choose between " << setprecision(8) << current_min << " ~ " << setprecision(8) << current_max << ")" << endl;
+
       string targetdate;
       cin >> targetdate;
       
@@ -690,7 +781,10 @@ void mode_view(string username) {
         }
       }
     }
-  }else if(command == "3"){
+  }
+
+  // All
+  else if(command == "3"){
     for (int i = 0; i < numberofdata; i++){   
       cout << "Record number " << i+1 << ") " << amount[i] << ' ' << date[i] <<' '<< time[i] <<' '<< type[i] <<' '<< account[i] <<endl;
     }  
