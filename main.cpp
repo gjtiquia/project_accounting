@@ -748,12 +748,13 @@ void mode_view(string username) {
   cout << "3) All" << endl;
   cout << "Enter Command: ";
   string command;
-  cin >> command;
-  
-  while (not(command =="1" or command=="2" or command=="3")){
-    cout << "Invalid command, please input it again: ";
-    cin >> command;
-  }
+    cout << "Command: ";
+    enterData (command);
+    while (not(command =="1" or command=="2" or command=="3")){
+      cout << "Invalid command, please input it again: ";
+      cout << "Command: ";
+      cin >> command;
+    }
   
   //print output
   // Amount
@@ -855,10 +856,147 @@ void mode_view(string username) {
 
 
 
-// ================================
+// ================================================================================================
 // Function: (5)
 void mode_report(string username){
   cout << "REPORT mode selected" << endl;
+  ifstream fin(username + ".txt");
+  int numberofdata;
+  fin >> numberofdata;
+
+  // If no data records at all, close
+  if (numberofdata == 0) {
+    cout << "No records found." << endl;
+    fin.close();
+    return;
+  }
+
+  // Else, show num of data
+  else {
+    cout << numberofdata << " record(s) found." << endl;
+  }
+  
+  //create 4 dynamic arrays
+  double * amount = new double [numberofdata];
+  string * date = new string [numberofdata];
+  string * time = new string [numberofdata];
+  string * type = new string [numberofdata];
+  string * account = new string [numberofdata];
+  
+  //input all data into array
+  for (int i=0; i<numberofdata; i++) {
+    fin >> amount[i];
+    fin >> date[i];
+    fin >> time[i];
+    fin >> type[i];
+    fin >> account[i];  
+  }
+  fin.close();
+  
+  //work on the function here
+  struct count {
+    string col;
+    int cnt;    
+  };
+  
+  count arr[numberofdata];
+  int len = 0;
+  
+  for (int i=0; i<numberofdata; i++){
+    bool occurbefore = false;
+    for (int j=0; j<numberofdata; j++){
+      if(type[i]==arr[j].col){
+        occurbefore = true;
+        break;
+      }
+    }
+    
+    if(not (occurbefore)){
+      arr[len].col = type[i];
+      arr[len].cnt = 0;
+      len++;
+    }
+  }
+  
+  for(int i=0; i<len; i++){
+    for (int j=0; j< numberofdata; j++){
+      if(arr[i].col == type[j]){
+        arr[i].cnt+=amount[j];
+      }
+    }
+  }
+  int sumofexpense = 0, sumofincome;
+  for (int i=0; i<numberofdata; i++){
+    if(amount[i]<0){
+      sumofexpense += amount[i];
+    }else if(amount[i]>0){
+      sumofincome += amount[i];
+    }
+  }
+  
+  //output
+  cout << "Sum of income: $" << sumofincome << "  Sum of expense: $" << sumofexpense * -1 << endl;
+  cout << "Saving amount: $" << sumofincome+sumofexpense << endl;
+  
+  for (int i=0; i<len; i++){
+    if (arr[i].cnt < 0){
+      cout << arr[i].col <<' '<< arr[i].cnt *100 /sumofexpense << '%' << endl;
+    }else{
+      cout << arr[i].col <<' '<< arr[i].cnt *100 /sumofincome << '%' << endl;
+    }
+  }
+  
+  //export to txt file
+  cout << "Export this reuslt to a txt file? " << endl;
+  cout << "1) Yes" << endl;
+  cout << "2) No" << endl;
+  cout << "Enter command: " << endl;
+  
+  string command;
+  enterData (command);
+  while (not(command =="1" or command=="2")){
+    cout << "Invalid command, please input it again: ";
+    cout << "Command: ";
+    cin >> command;
+  }
+  
+  if (command == "1"){
+    cout << "what is the file name (\".txt\" will be add after the file name automatically)? " <<endl;
+    string filename;
+    enterData(filename);
+    while (containsString(filename, " ")) {
+        cout << "File name cannot contain space, please enter it again." << endl;
+        cout << "Please enter file name in one word (eg. cash, octopus, credit_card...): ";
+        enterData(filename);
+    }
+    
+    ofstream fout(filename + ".txt");
+    fout << "Sum of income: $" << sumofincome << "  Sum of expense: $" << sumofexpense * -1 << endl;
+    fout << "Saving amount: $" << sumofincome+sumofexpense << endl;
+  
+    for (int i=0; i<len; i++){
+      if (arr[i].cnt < 0){
+        fout << arr[i].col <<' '<< arr[i].cnt *100 /sumofexpense << '%' << endl;
+      }else{
+        fout << arr[i].col <<' '<< arr[i].cnt *100 /sumofincome << '%' << endl;
+      }
+    }
+    fout.close();
+    cout << "Export successfully" << endl;
+    
+  }else if(command == "2"){
+    cout << "Exit report mode" << endl;
+  }
+  
+  
+  
+  //delete dynamic array
+  delete [] amount;
+  delete [] date;
+  delete [] time;
+  delete [] type;
+  delete [] account;
+  
   
 }
 // ================================
@@ -868,6 +1006,7 @@ void mode_report(string username){
 // Input: string username: user's username
 void mode_budget_setting(string username) {
   cout << "BUDGET SETTING mode selected" << endl;
+  
 }
 // ================================
 
