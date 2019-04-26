@@ -925,7 +925,7 @@ void mode_report(string username){
       }
     }
   }
-  int sumofexpense = 0, sumofincome;
+  int sumofexpense = 0, sumofincome = 0;
   for (int i=0; i<numberofdata; i++){
     if(amount[i]<0){
       sumofexpense += amount[i];
@@ -950,7 +950,7 @@ void mode_report(string username){
   cout << "Export this reuslt to a txt file? " << endl;
   cout << "1) Yes" << endl;
   cout << "2) No" << endl;
-  cout << "Enter command: " << endl;
+  cout << "Enter command: ";
   
   string command;
   enterData (command);
