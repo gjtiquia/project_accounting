@@ -12,6 +12,7 @@
 #include <fstream>
 #include <stdlib.h>
 #include <iomanip>
+#include <ctime>
 
 using namespace std;
 
@@ -1024,6 +1025,20 @@ int main() {
   string username, password;
   string command; // store 1 or 2; 
   cout << "Welcome to the Accounting System" << endl;
+
+  // Saves system current date to string currentdate
+  string currentdate = "";
+  time_t t = time(0);   // get time now
+  struct tm * now = localtime( & t );
+  currentdate += to_string(now->tm_year + 1900);
+  if (to_string(now->tm_mon + 1).length() == 1) {
+    currentdate += "0" + to_string(now->tm_mon + 1);
+  }
+  else if (to_string(now->tm_mon + 1).length() == 2) {
+    currentdate += to_string(now->tm_mon + 1);
+  }
+  currentdate += to_string(now->tm_mday);
+  cout << "Current Date: " << currentdate << endl;
 
   // Log In or Sign Up
   cout << "1) Log In" << endl << "2) Sign Up" << endl;
