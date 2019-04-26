@@ -1120,12 +1120,14 @@ int main() {
     string newusername, newpassword, passwordcheck;
     
     // Saves array of current usernames
-    ifstream taken("username_passwords.txt");
+    ifstream taken;
+    taken.open("username_passwords.txt");
+
     int numberofdata;
     taken >> numberofdata;
     string * taken_usernames = new string [numberofdata];
 
-    for (int i = 0; i < 2 * numberofdata; i++) {
+    for (int i = 0; i < numberofdata; i++) {
       string temp;
       taken >> temp;
       taken_usernames[i] = temp;
