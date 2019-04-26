@@ -1033,7 +1033,8 @@ void enterDouble(string &line) {
 
 // Function: (6)
 // Input: string username: user's username
-void mode_budget_setting(string username) {
+//        string date: today's date
+void mode_budget_setting(string username, string date) {
   cout << "BUDGET SETTING mode selected" << endl;
   string goal;
 
@@ -1051,6 +1052,7 @@ void mode_budget_setting(string username) {
     cout << "How much do you want to save per month?" << endl;
     cout << "Enter amount: ";
     enterDouble(goal);   
+    cout << "Current goal to save per month: $" << goal << endl;
   }
   check.close();
 
@@ -1061,7 +1063,7 @@ void mode_budget_setting(string username) {
 
   // Choose Command
   cout << "What would you like to do?" << endl;
-  cout << "1) Show saving progress" << endl;
+  cout << "1) Show current budget" << endl;
   cout << "2) Change budget setting" << endl;
   cout << "3) Exit to Main Menu" << endl;
   cout << "Command: ";
@@ -1071,11 +1073,27 @@ void mode_budget_setting(string username) {
   // Show
   if (command == "1") {
 
+    // show current date, also calculate how many days in this month (eg. Feb = 28/29, Apr = 30, July = 31)
+    // add up income and expenses, show them
+    // how much can still use till the end of the month
+    // how much on average per day have been spending
+    // in order to save, maximum how much to spend per day, assuming no extra income
+
   }
 
   // Change
   else if (command == "2") {
+    
+    cout << "How much do you want to save per month?" << endl;
+    cout << "Enter amount: ";
+    enterDouble(goal);
 
+    // Update user's budget settings txt file
+    ofstream update(username + "_budget_setting.txt");
+    update << goal << endl;
+    update.close();
+
+    cout << "Successfully change to $" << goal << " per month." << endl;
   }
 }
 // ================================
@@ -1352,7 +1370,7 @@ int main() {
       mode_report(username);
     }
     else if (mode == valid_modes[10] || mode == valid_modes[11]) {
-      mode_budget_setting(username);
+      mode_budget_setting(username, currentdate);
     }
     else if (mode == valid_modes[12] || mode == valid_modes[13]) {
       mode_trend(username);
