@@ -1000,14 +1000,83 @@ void mode_report(string username){
   
   
 }
+
 // ================================
 
+// Function: check if string can be turned into a double
+// Input: string line: line to checl
+// Output: bool: 1 if can, 0 if cant
+bool canDouble(string line) {
+  bool out = 1;
+  for (int i = 0; i < line.length(); i++) {
+    if (not (((line[i] >= '0') && (line[i] <= '9')) || line[i] == '.')) {
+      out = 0;
+      break;
+    }
+  }
+  return out;
+}
+
+// ================================
+
+// Function: ensure input can turn into double
+// Input: string &line: input line
+void enterDouble(string &line) {
+  enterData(line);
+  while (not canDouble(line)) {
+    cout << "Invalid Input. Please enter again: ";
+    enterData(line);
+  }
+}
+
+// ================================
 
 // Function: (6)
 // Input: string username: user's username
 void mode_budget_setting(string username) {
   cout << "BUDGET SETTING mode selected" << endl;
-  
+  string goal;
+
+  // Open user's budget settings txt file
+  ofstream fout(username + "_budget_setting.txt", ios::app); // REMEMBER TO ADD ios::app for APPEND, OR ELSE WILL OVERWRITE
+  fout.close();
+
+  // Check if previously have budget setting
+  ifstream check(username + "_budget_setting.txt");
+  if (check >> goal) {
+    cout << "Current goal to save per month: $" << goal << endl;
+  }
+  else {
+    cout << "No saving goal found." << endl;
+    cout << "How much do you want to save per month?" << endl;
+    cout << "Enter amount: ";
+    enterDouble(goal);   
+  }
+  check.close();
+
+  // Update user's budget settings txt file
+  ofstream update(username + "_budget_setting.txt");
+  update << goal << endl;
+  update.close();
+
+  // Choose Command
+  cout << "What would you like to do?" << endl;
+  cout << "1) Show saving progress" << endl;
+  cout << "2) Change budget setting" << endl;
+  cout << "3) Exit to Main Menu" << endl;
+  cout << "Command: ";
+  string command;
+  enterData(command);
+
+  // Show
+  if (command == "1") {
+
+  }
+
+  // Change
+  else if (command == "2") {
+
+  }
 }
 // ================================
 
