@@ -1035,7 +1035,7 @@ void enterDouble(string &line) {
 // Input: string username: user's username
 //        string date: today's date
 void mode_budget_setting(string username, string date) {
-  cout << "BUDGET SETTING mode selected" << endl;
+  cout << "BUDGET MONITORING mode selected" << endl;
   string goal;
 
   // Open user's budget settings txt file
@@ -1072,13 +1072,95 @@ void mode_budget_setting(string username, string date) {
 
   // Show
   if (command == "1") {
-
     // show current date, also calculate how many days in this month (eg. Feb = 28/29, Apr = 30, July = 31)
-    // add up income and expenses, show them
-    // how much can still use till the end of the month
-    // how much on average per day have been spending
-    // in order to save, maximum how much to spend per day, assuming no extra income
+    cout << "Current date: " << date << endl;
+    int total_days;
+    // Feb has 28 or 29
+    if (date.substr(4, 2) == "02") {
+      // Leap Year = 29
+      if (stoi(date.substr(0, 4)) % 4 == 0) {
+        total_days = 29;
+      }
+      else {
+        total_days = 28;
+      }
+    }
+    // Jan, Mar, May, Jul, Aug, Oct, Dec
+    else if (date.substr(4, 2) == "01" or
+             date.substr(4, 2) == "03" or
+             date.substr(4, 2) == "05" or
+             date.substr(4, 2) == "07" or
+             date.substr(4, 2) == "08" or
+             date.substr(4, 2) == "10" or
+             date.substr(4, 2) == "12") 
+    {
+      total_days = 31;
+    }
+    else {
+      total_days = 30;
+    }
+    cout << "Days this month: " << total_days << endl;
 
+    // add up income and expenses, show them
+    double income = 0, expenses = 0;
+
+    ifstream records;
+    records.open(username + ".txt");
+
+    int numberofdata;
+    records >> numberofdata;
+
+    double current_amount;
+    string current_date;
+    string trash;
+    for (int i = 0; i < numberofdata; i++) {
+      records >> current_amount;
+      records >> current_date;
+      records >> trash;
+      records >> trash;
+      records >> trash;
+
+      // If in current month, add up
+      if (current_date.substr(0, 6) == date.substr(0, 6)) {
+        if (current_amount > 0) {
+          income += current_amount;
+        }
+        else {
+          expenses += -1 * current_amount;
+        }
+      }
+    }
+    records.close();
+
+    cout << "Total Income This Month (" << date.substr(0, 6) << "): $" 
+         << fixed << setprecision(1) << income << defaultfloat << endl;
+    cout << "Total Expenses This Month (" << date.substr(0, 6) << "): $" 
+         << fixed << setprecision(1) << expenses << defaultfloat<< endl;
+
+    // how much on average per day have been spending
+    cout << "You have spent on average $" 
+         << fixed << setprecision(1) <<  expenses/total_days << defaultfloat
+         << " per day this month" << endl;
+
+    // how much can still use till the end of the month
+    double money_left;
+    money_left = income - expenses - stoi(goal);
+    
+    if (money_left >= 0) {
+      cout << "Money left to use this month to save $" << goal << " = $" 
+           << fixed << setprecision(1) << money_left << defaultfloat <<endl;
+      
+      // money to use per day to save
+      cout << "You should use $" 
+           << fixed << setprecision(1) << money_left/(total_days - stoi(date.substr(6, 2)) + 1) << defaultfloat
+           << " per day on average till the end of the month to save $" << goal << endl;
+    }
+    
+    // used too much 
+    else {
+      cout << "Your expenses is more than your income by $" << -1 * money_left << endl;
+      cout << "Please increase your income or decrease your expenses next month";
+    }
   }
 
   // Change
@@ -1340,7 +1422,7 @@ int main() {
     "3", "Edit", 
     "4", "View",
     "5", "Report",
-    "6", "Budget Setting",
+    "6", "Budget Monitoring",
     "7", "Trend",
     "8", "Exit" // This should always be last
   };
