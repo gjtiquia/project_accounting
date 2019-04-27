@@ -1,4 +1,4 @@
-// BUDGET MONITORING MODE
+// TREND MONITORING MODE
 
 #include <iostream>
 #include <string>
@@ -128,7 +128,7 @@ void mode_trend (string username){
   
   //work on function here
   
-  int sumofexpense = 0, sumofincome = 0;
+  double sumofexpense = 0, sumofincome = 0;
   for (int i=0; i<numberofdata; i++){
     if(amount[i]<0){
       sumofexpense += amount[i];
@@ -155,17 +155,18 @@ void mode_trend (string username){
   
   
   //output
-  cout << "Average income per day: $" << sumofincome/totaldays << endl;
-  cout << "Average expense per day: $" << -1 * sumofexpense/totaldays << endl;
+  cout << "Average income per day: $" << fixed << setprecision(1) << sumofincome/totaldays << defaultfloat << endl;
+  cout << "Average expense per day: $" << fixed << setprecision(1) << -1 * sumofexpense/totaldays << defaultfloat << endl;
   
   
   if(sumofincome/totaldays > -1 * sumofexpense/totaldays){
-    cout << "Congraduation you save $" << netperday << " everyday." << endl;
+    cout << "Congradulations you saved $" << fixed << setprecision(1) << netperday << defaultfloat << " everyday." << endl;
     
     cout << "1) See how much you can save after a period of time" << endl;
     cout << "2) See how long you need to take to save an amount of money" << endl;
-    cout << "0) exit" << endl;
+    cout << "0) Exit" << endl;
     
+    cout << "Command: ";
     string command;
     enterData (command);
     while (not(command =="1" or command=="2" or command=="0")){
@@ -176,16 +177,20 @@ void mode_trend (string username){
     if(command =="1"){
       cout << "How many days? " << endl;
       int goalday;
+      cout << "Days: ";
       cin >> goalday;
 
       while (goalday <= 0){
-        cout << "How many days? (possitive integer) " ;
+        cout << "How many days? (positive integer) " ;
         cin >> goalday;
       }
-      cout << "You can save $" << netperday * goalday << " after " << goalday << " day(s)." << endl;
+      cout << "You can save $"
+           << fixed << setprecision(1) << netperday * goalday << " after " << goalday 
+           << " day(s)." << defaultfloat<< endl;
       
-    }else if(command =="2"){
-      cout << "How much you want to save? ";
+    } else if(command =="2"){
+      cout << "How much you want to save?" << endl;
+      cout << "Amount: ";
       double goalamount;
       cin >> goalamount;
       while(goalamount < 0){
@@ -193,10 +198,12 @@ void mode_trend (string username){
         cin >> goalamount;
       }
       
-      cout << "You can save $" << goalamount << " after " << goalamount/netperday << " day(s)." << endl;
+      cout << "You can save $" 
+           << fixed << setprecision(1) << goalamount << " after " << goalamount/netperday 
+           << " day(s)." << defaultfloat << endl;
       
     }else if (command =="0"){
-      cout << "exit Trend mode" << endl;
+      cout << "exiting TREND mode..." << endl;
     }
     
     
@@ -207,11 +214,15 @@ void mode_trend (string username){
     cin >> goalday;
     
     while (goalday <= 0){
-      cout << "How many days? (possitive integer) " ;
+      cout << "How many days? (positive integer) " ;
       cin >> goalday;
     }
     
-    cout << "You are recommanded to spend $" << sumofincome / totaldays - (sumofincome + sumofexpense)/ goalday << " per day, in order to balance your income and expense after "<<goalday<< " day(s)." << endl;
+    cout << "You are recommended to spend $" 
+         << fixed << setprecision(1) << sumofincome / totaldays - (sumofincome + sumofexpense)/ goalday 
+         << defaultfloat << " per day, in order to balance your income and expense after " 
+         << goalday << " day(s)." << endl;
+
   }else if(sumofincome/totaldays == -1 * sumofexpense/totaldays){
     cout << "Your average income per day is equal to the average expense per day." << endl;
   }
