@@ -1,0 +1,6 @@
+Sum of income: $25000  Sum of expense: $320
+Saving amount: $24680
+Income:
+wage 100%
+Expenses:
+food 100%

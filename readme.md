@@ -84,8 +84,148 @@ You can choose from the following modes
 8) Exit
 Enter a number from "1" to "8" to access the modes.
 
-3.2.1) ADD Mode
+----------------------------------------------------------
 
+3.2.1) Add Mode
+You will be prompted one by one to enter the following
+- Amount (positive for income, negative for expenses)
+- Date (in yyyymmdd format)
+- Time (in hhmm 24-hour format)
+- Type (eg. Food, wage...)
+- Account (eg. cash, octopus, credit_card...)
+
+----------------------------------------------------------
+
+3.2.2) Delete Mode
+In delete mode, the program will ask the user how many record he want to delete. 
+Then, the program will ask the user to search the record by amount, date, show all the records or exit. 
+
+3.2.2.1) Amount
+As for choosing amount, the program will ask the user to input a range of money, then, the corresponding record will be shown. 
+
+3.2.2.2) Date
+As for choosing date, the transaction done on that day will be shown. 
+
+3.2.2.3) All
+For choosing all, all records will be shown. For choosing exit, the program will stop.
+
+
+The user can choose which record he wants to delete. Then, it will be deleted.
+
+----------------------------------------------------------
+
+3.2.3) Edit mode
+In edit mode, the program will ask the user how many record does he want to edit. Then, the program will ask the user to search the record by amount, date, show all the records or exit.  
+
+3.2.3.1) Amount
+As for choosing amount, the program will ask the user to input a range of money.
+Then, the corresponding record will be shown.
+
+3.2.3.2) Date
+As for choosing date, the transaction done on that day will be shown.
+
+3.2.3.3) All
+For choosing all, all records will be shown. 
+
+3.2.3.4) Exit
+For choosing exit, the program will stop.
+
+
+The user can choose the record which he wants to edit. 
+After that, he can further choose which column he wants to edit (Amount/Date/Time/Type/Account)
+Then input the new value which will replace the original value. 
+
+----------------------------------------------------------
+
+3.2.4) View Mode
+Will exit if no records found.
+If there are records, you will be prompted to view your records by
+1) Amount
+2) Date
+3) All
+Please enter a number from "1" to "3".
+
+3.2.4.1) Amount
+You will be prompted to enter a range of amount.
+For example if the program prompted you to enter a range between 200~600,
+you may first enter "250", then enter "400".
+You will then be shown all records within that range.
+
+3.2.4.2) Date
+You will be prompted to enter a date.
+For example if the program prompted you to enter dates between 20190723~20191116,
+you may first enter "20190907".
+You will then be shown all records within those dates.
+If no records have that date, you will be exited from View mode.
+
+3.2.4.3) All
+You will be shown all current records.
+
+----------------------------------------------------------
+
+3.4.5) Report Mode
+In report mode, the program will list out the source of income of the user.
+Meanwhile, listing out the corresponding percentage. 
+After that, the source of expenditure of the user and the corresponding percentage will be shown as well. 
+The program will then ask the user if he would like to export all the input to a .txt file. 
+Enter "1" or "2".
+If so, the program will further ask the user to input the file name. 
+For example, you may enter "chris_wong_report".
+
+----------------------------------------------------------
+
+3.2.6) Budget Monitoring Mode
+Will display the current saving goal. If there is no current saving goal, you will be prompted to enter a new saving goal.
+For example, you may enter "400".
+
+You wil be prompted to choose the following commands
+1) Show current budget
+2) Change budget setting
+3) Exit
+Please enter a number from "1" to "3"
+
+3.2.6.1) Show current budget
+You will be shown the following information
+- Total Income This Month 
+- Total Expenses This Month
+- How much spent on average per day this Month
+- How much money left to use in order to save
+- How much money to spend per day for the remaining months in order to reach saving goal
+
+However, if your income is more than your expenses, you will be shown how much is your expenses more than your income
+
+3.2.6.2) Change Budget Setting
+You will be prompted to enter a new saving goal.
+For example, you may enter "400".
+
+3.2.6.3) Exit
+Exits the Budget Monitoring mode
+
+----------------------------------------------------------
+
+3.2.7) Trend Mode
+In trend mode, the sum of income and sum of expense will be calculated, then an average net amount per day will be calculated. 
+
+
+3.2.7.1) Positive Net Amount
+If the above value is positive, it is the average saving per day. Then, the user can choose between the below two functions. 
+
+3.2.7.1.1) Input Days
+The user can input a period (in days) and the program will output the money he can saved in that period. 
+
+3.2.7.1.2) Input Amount to save
+The user can also input the amount he wants to save, and the program will output the time (in days) he needs to save the money. 
+
+
+3.2.7.2) Negative Net Amount
+However, if the average net amount per day is negative, the program will ask the user to input the number of days which the user desires to reach a balance in the average net amount per day.
+Then output the corresponding recommended spending amount per day.
+
+
+3.2.7.3) Net Amount = 0
+If the average net amount of money is zero, the program will show to the user that his average income per day is equal to the average expense per day. 
+
+----------------------------------------------------------
 
 
 

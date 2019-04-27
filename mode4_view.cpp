@@ -169,7 +169,7 @@ void mode_view(string username) {
       }
 
       if (numberoutput == 0){
-        cout << "Error." << endl;
+        cout << "Error. Out of Range" << endl;
       }     
     }
   }
@@ -179,13 +179,14 @@ void mode_view(string username) {
     
       int numberoutput = 0;
     while(numberoutput==0){
-      cout << "Please in put the date of the record you want to view (8 digits): " ;
+      cout << "Please in put the date of the record you want to view (8 digits): " << endl;
 
       // Give a range for user to choose from
       double current_min = minInColumn(username + ".txt", 1);
       double current_max = maxInColumn(username + ".txt", 1);
       cout << "(Choose between " << setprecision(8) << current_min << " ~ " << setprecision(8) << current_max << ")" << endl;
 
+      cout << "Date: ";
       string targetdate;
       cin >> targetdate;
       
@@ -209,7 +210,8 @@ void mode_view(string username) {
         }
       }
     if (numberoutput == 0){
-        cout << "Error." << endl;
+        cout << "Error. No record found with that date." << endl;
+        numberoutput = 1;
       }   
     }
   }
