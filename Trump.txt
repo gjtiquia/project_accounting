@@ -1,5 +1,0 @@
-4
-100 20190401 1234 wage cash
--20 20190411 0022 food cash
--10 20190417 1231 transpot octupus
--50 20190425 2131 food credit_card
