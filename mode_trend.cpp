@@ -91,6 +91,138 @@ void enterDouble(string &line);
 // Function: (7)
 void mode_trend (string username){
   cout << "TREND mode seleted" << endl;
+  
+  ifstream fin(username + ".txt");
+  int numberofdata;
+  fin >> numberofdata;
+
+  // If no data records at all, close
+  if (numberofdata == 0) {
+    cout << "No records found." << endl;
+    fin.close();
+    return;
+  }
+
+  // Else, show num of data
+  else {
+    cout << numberofdata << " record(s) found." << endl;
+  }
+  
+  //create 4 dynamic arrays
+  double * amount = new double [numberofdata];
+  string * date = new string [numberofdata];
+  string * time = new string [numberofdata];
+  string * type = new string [numberofdata];
+  string * account = new string [numberofdata];
+  
+  //input all data into array
+  for (int i=0; i<numberofdata; i++) {
+    fin >> amount[i];
+    fin >> date[i];
+    fin >> time[i];
+    fin >> type[i];
+    fin >> account[i];  
+  }
+  fin.close();
+  
+  
+  //work on function here
+  
+  int sumofexpense = 0, sumofincome = 0;
+  for (int i=0; i<numberofdata; i++){
+    if(amount[i]<0){
+      sumofexpense += amount[i];
+    }else if(amount[i]>0){
+      sumofincome += amount[i];
+    }
+  }
+  
+  int totaldays = 0;
+  for(int i=0; i<numberofdata; i++){
+    bool repeat = false;
+    for (int j=0; j<i; j++){
+      if(date[i]==date[j]){
+        repeat = true;
+        break;
+      }
+    }
+    if(not (repeat)){
+      totaldays++;
+    }
+  }
+  
+  double netperday = (sumofincome + sumofexpense)/totaldays;
+  
+  
+  //output
+  cout << "Average income per day: $" << sumofincome/totaldays << endl;
+  cout << "Average expense per day: $" << -1 * sumofexpense/totaldays << endl;
+  
+  
+  if(sumofincome/totaldays > -1 * sumofexpense/totaldays){
+    cout << "Congraduation you save $" << netperday << " everyday." << endl;
+    
+    cout << "1) See how much you can save after a period of time" << endl;
+    cout << "2) See how long you need to take to save an amount of money" << endl;
+    cout << "0) exit" << endl;
+    
+    string command;
+    enterData (command);
+    while (not(command =="1" or command=="2" or command=="0")){
+      cout << "Invalid command, please input it again: ";
+      cout << "Command: ";
+      cin >> command;
+    }
+    if(command =="1"){
+      cout << "How many days? " << endl;
+      int goalday;
+      cin >> goalday;
+
+      while (goalday <= 0){
+        cout << "How many days? (possitive integer) " ;
+        cin >> goalday;
+      }
+      cout << "You can save $" << netperday * goalday << " after " << goalday << " day(s)." << endl;
+      
+    }else if(command =="2"){
+      cout << "How much you want to save? ";
+      double goalamount;
+      cin >> goalamount;
+      while(goalamount < 0){
+        cout << "Input amount cannot be negative, please input it again: ";
+        cin >> goalamount;
+      }
+      
+      cout << "You can save $" << goalamount << " after " << goalamount/netperday << " day(s)." << endl;
+      
+    }else if (command =="0"){
+      cout << "exit Trend mode" << endl;
+    }
+    
+    
+  }else if (sumofincome/totaldays < -1 * sumofexpense/totaldays){
+    int goalday;
+    cout << "Please set a period of time in order to balance your income and expense." << endl;
+    cout << "How many days? " ;
+    cin >> goalday;
+    
+    while (goalday <= 0){
+      cout << "How many days? (possitive integer) " ;
+      cin >> goalday;
+    }
+    
+    cout << "You are recommanded to spend $" << sumofincome / totaldays - (sumofincome + sumofexpense)/ goalday << " per day, in order to balance your income and expense after "<<goalday<< " day(s)." << endl;
+  }else if(sumofincome/totaldays == -1 * sumofexpense/totaldays){
+    cout << "Your average income per day is equal to the average expense per day." << endl;
+  }
+  
+  
+  //delete dynamic array
+  delete [] amount;
+  delete [] date;
+  delete [] time;
+  delete [] type;
+  delete [] account;
 }
 
 // ================================
