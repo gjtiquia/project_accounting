@@ -167,6 +167,10 @@ void mode_view(string username) {
           numberoutput++;
         }
       }
+
+      if (numberoutput == 0){
+        cout << "Error." << endl;
+      }     
     }
   }
 
@@ -204,6 +208,9 @@ void mode_view(string username) {
           numberoutput++;
         }
       }
+    if (numberoutput == 0){
+        cout << "Error." << endl;
+      }   
     }
   }
 
