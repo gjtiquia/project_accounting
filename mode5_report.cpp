@@ -156,16 +156,22 @@ void mode_report(string username){
   cout << "Sum of income: $" << sumofincome << "  Sum of expense: $" << sumofexpense * -1 << endl;
   cout << "Saving amount: $" << sumofincome+sumofexpense << endl;
   
+  cout << "Income:" << endl;
+  for (int i=0; i<len; i++){
+    if (not (arr[i].cnt < 0)){
+      cout << arr[i].col <<' '<< arr[i].cnt *100 /sumofincome << '%' << endl;
+    }
+  }
+
+  cout << "Expenses:" << endl; 
   for (int i=0; i<len; i++){
     if (arr[i].cnt < 0){
       cout << arr[i].col <<' '<< arr[i].cnt *100 /sumofexpense << '%' << endl;
-    }else{
-      cout << arr[i].col <<' '<< arr[i].cnt *100 /sumofincome << '%' << endl;
     }
   }
   
   //export to txt file
-  cout << "Export this reuslt to a txt file? " << endl;
+  cout << "Export this result to a txt file? " << endl;
   cout << "1) Yes" << endl;
   cout << "2) No" << endl;
   cout << "Enter command: ";
@@ -179,7 +185,8 @@ void mode_report(string username){
   }
   
   if (command == "1"){
-    cout << "what is the file name (\".txt\" will be add after the file name automatically)? " <<endl;
+    cout << "What is the file name (\".txt\" will be add after the file name automatically)? " <<endl;
+    cout << "Enter filename: ";
     string filename;
     enterData(filename);
     while (containsString(filename, " ")) {
@@ -192,15 +199,22 @@ void mode_report(string username){
     fout << "Sum of income: $" << sumofincome << "  Sum of expense: $" << sumofexpense * -1 << endl;
     fout << "Saving amount: $" << sumofincome+sumofexpense << endl;
   
+    fout << "Income:" << endl;
     for (int i=0; i<len; i++){
-      if (arr[i].cnt < 0){
-        fout << arr[i].col <<' '<< arr[i].cnt *100 /sumofexpense << '%' << endl;
-      }else{
+      if (not (arr[i].cnt < 0)){
         fout << arr[i].col <<' '<< arr[i].cnt *100 /sumofincome << '%' << endl;
       }
     }
+
+    fout << "Expenses:" << endl; 
+    for (int i=0; i<len; i++){
+      if (arr[i].cnt < 0){
+        fout << arr[i].col <<' '<< arr[i].cnt *100 /sumofexpense << '%' << endl;
+      }
+    }
+
     fout.close();
-    cout << "Export successfully" << endl;
+    cout << "Export successfully to " << filename << ".txt" << endl;
     
   }else if(command == "2"){
     cout << "Exit report mode" << endl;
